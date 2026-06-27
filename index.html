@@ -3,102 +3,185 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MNT Staking - Decentralized DeFi Portal</title>
-  <meta name="description" content="Secure, non-custodial portal for MNT Staking DeFi operations directly from your own wallet.">
+  <title>MNT Staking - Put MNT to Work</title>
+  <meta name="description" content="MNT Staking helps you stake MNT from your wallet, review live terms, and keep control of every transaction before you confirm in the app.">
+  <meta name="theme-color" content="#FBFAF7">
   <link rel="canonical" href="https://mnt-staking.github.io/">
   <meta name="robots" content="index,follow">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
   <link rel="manifest" href="site.webmanifest">
   <link rel="prefetch" href="dashboard/">
-  <link rel="prerender" href="dashboard/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MNT Staking - Put MNT to Work">
+  <meta property="og:description" content="Stake MNT from your own wallet, compare live app terms, and keep custody while you manage your Mantle position.">
+  <meta property="og:image" content="https://mnt-staking.github.io/og-cover.png">
+  <meta property="og:url" content="https://mnt-staking.github.io/">
   <style>
+  :root{
+    --bg:#FBFAF7; --panel:#FFFFFF; --field:#F7F4EE;
+    --ink:#1A1512; --muted:#6E665E; --faint:#9C958B;
+    --line:rgba(26,21,18,.09); --line-2:rgba(26,21,18,.05);
+    --accent:#4B5563; --accent-ink:#373E49; --accent-soft:rgba(75,85,99,.1);
+    --pos:#15A34A;
+    --radius:22px; --radius-sm:14px;
+    --shadow-card:0 1px 0 rgba(26,21,18,.03), 0 34px 64px -30px rgba(26,21,18,.24), 0 10px 24px -18px rgba(26,21,18,.18);
+    --shadow-soft:0 1px 0 rgba(26,21,18,.02), 0 20px 44px -32px rgba(26,21,18,.24);
+    --ui:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0; overflow-x:hidden}
+  body{background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.55; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; position:relative}
+  a{color:inherit; text-decoration:none}
+  a.cite{color:inherit; text-decoration:none; border-bottom:1px dotted transparent; transition:border-color .15s ease}
+  a.cite:hover{border-bottom-color:var(--faint)}
+  img{display:block; max-width:100%}
+  button{font:inherit; cursor:pointer; border:none; background:none; color:inherit}
+  h1,h2,h3,p{margin:0}
 
+  /* ---------- texture (dot matrix + warm glow) ---------- */
+  .bg{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+  .bg .glow{position:absolute; inset:0; background:
+      radial-gradient(700px 480px at 78% -6%, rgba(75,85,99,.12), transparent 62%),
+      radial-gradient(680px 520px at 6% 18%, rgba(75,85,99,.07), transparent 60%);}
+  .bg .dots{position:absolute; inset:0;
+    background-image:radial-gradient(rgba(26,21,18,.06) 1px, transparent 1.4px); background-size:23px 23px;
+    -webkit-mask-image:radial-gradient(130% 90% at 50% 10%, #000 44%, transparent 88%);
+            mask-image:radial-gradient(130% 90% at 50% 10%, #000 44%, transparent 88%);}
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  /* ---------- top bar ---------- */
+  .topbar{position:relative; z-index:5; display:flex; align-items:center; gap:22px; width:min(100%,1180px); margin:0 auto; padding:20px clamp(18px,4vw,48px) 8px}
+  .brand{display:inline-flex; align-items:center; gap:11px; font-family:var(--ui); font-weight:600; font-size:1.05rem; letter-spacing:-.01em}
+  .brand img{width:30px; height:30px; border-radius:8px; box-shadow:0 0 0 1px rgba(255,255,255,.8), 0 8px 18px -12px rgba(75,85,99,.5)}
+  .spacer{flex:1}
+  .nav{display:flex; align-items:center; gap:clamp(16px,2.6vw,30px)}
+  .nav a{font-family:var(--ui); font-weight:500; font-size:.92rem; color:var(--muted); transition:color .16s ease}
+  .nav a:hover{color:var(--accent-ink)}
 
-/* ===== Base bridge — SIMPLE scenario (one-screen, light premium, Base blue) ===== */
-:root{
-  --bg:#F4F6FB; --surface:#FFFFFF; --inset:#F1F4FA;
-  --ink:#0B0F18; --muted:#586273; --faint:#949CAB;
-  --accent:#12A594; --accent-2:#0E8A7C; --accent-soft:rgba(18,165,148,.12);
-  --line:rgba(11,15,24,.09); --line-2:rgba(11,15,24,.16);
-  --radius:20px; --shadow:0 26px 60px -30px rgba(11,15,24,.30);
-  --max:1080px;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:
-    radial-gradient(60% 40% at 50% -6%, rgba(18,165,148,.10), transparent 60%),
-    var(--bg);
-  color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  min-height:100dvh;display:flex;flex-direction:column}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-h1{margin:0;line-height:1.08;letter-spacing:-.03em}
-p{margin:0}
+  /* ---------- section frame (mobile-safe: vertical padding only) ---------- */
+  .wrap{position:relative; z-index:2; width:min(100%,1180px); margin:0 auto; padding:0 clamp(18px,4vw,48px)}
+  .sec{padding-top:clamp(50px,7vh,90px); padding-bottom:clamp(50px,7vh,90px)}
+  .sec-head{max-width:60ch; margin:0 0 clamp(26px,4vh,40px)}
+  .eyebrow{display:inline-flex; align-items:center; gap:9px; font-family:var(--ui); font-weight:600; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink)}
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px var(--accent-soft)}
+  .eyebrow svg{width:15px; height:15px}
+  .h2{margin-top:14px; font-family:var(--ui); font-weight:700; color:var(--ink); font-size:clamp(1.9rem,3.4vw,2.7rem); line-height:1.04; letter-spacing:-.02em}
+  .sec-head p{margin-top:14px; color:var(--muted); font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.6}
 
-.topbar{display:flex;align-items:center;gap:14px;padding:18px clamp(16px,4vw,40px)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.12rem;letter-spacing:-.01em}
-.brand img{border-radius:8px}
-.nav{display:flex;gap:26px;margin-left:18px}
-.nav a{color:var(--muted);font-size:.93rem;font-weight:500;transition:color .15s}
-.nav a:hover{color:var(--ink)}
-.sp{flex:1}
-.ghost{display:inline-flex;align-items:center;background:var(--ink);color:#fff;font-weight:600;font-size:.9rem;
-  padding:9px 18px;border-radius:999px;transition:transform .12s,opacity .2s}
-.ghost:hover{transform:translateY(-1px);opacity:.92}
+  /* ---------- hero ---------- */
+  .hero{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.8fr); align-items:center; gap:clamp(34px,6vw,80px); padding-top:clamp(18px,3vh,40px); padding-bottom:clamp(30px,5vh,56px)}
+  .copy{min-width:0}
+  .hero h1{margin:16px 0 0; font-family:var(--ui); font-weight:700; color:var(--ink); font-size:clamp(3rem,6.4vw,5.2rem); line-height:.98; letter-spacing:-.03em}
+  .deck{max-width:46ch; margin:20px 0 0; color:var(--muted); font-size:clamp(1.04rem,1.35vw,1.18rem); line-height:1.6}
+  .deck strong{color:var(--ink); font-weight:600; box-shadow:inset 0 -.36em 0 var(--accent-soft)}
+  .chips{list-style:none; margin:26px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:9px}
+  .chips li{display:inline-flex; align-items:center; gap:7px; min-height:38px; padding:8px 14px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.7); font-family:var(--ui); font-weight:500; font-size:.88rem; color:var(--ink)}
+  .chips li::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  .cta-row{display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin:30px 0 0}
+  .primary{display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:54px; padding:0 28px; border-radius:14px; background:var(--ink); color:#fff; font-family:var(--ui); font-weight:600; font-size:1.02rem; letter-spacing:-.01em; box-shadow:0 16px 30px -16px rgba(26,21,18,.7); transition:transform .18s ease, box-shadow .18s ease, filter .18s ease}
+  .primary:hover{transform:translateY(-1px); filter:brightness(1.08); box-shadow:0 22px 38px -16px rgba(26,21,18,.8)}
+  .primary svg{width:17px; height:17px}
+  .ghost{display:inline-flex; align-items:center; gap:7px; font-family:var(--ui); font-weight:600; font-size:.98rem; color:var(--muted); transition:color .16s ease}
+  .ghost:hover{color:var(--accent-ink)}
+  .ghost svg{width:15px; height:15px}
 
-.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:20px clamp(16px,4vw,40px) 8px;gap:0}
-.stage h1{font-size:clamp(2.6rem,6.5vw,4.2rem);font-weight:800}
-.sub{color:var(--muted);font-size:clamp(1.02rem,1.7vw,1.2rem);max-width:46ch;margin-top:16px}
-.sub strong{color:var(--ink);font-weight:700;box-shadow:inset 0 -.5em 0 var(--accent-soft)}
+  /* ---------- stake card ---------- */
+  .card{width:min(100%,400px); margin:0 0 0 auto; padding:14px; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-card); position:relative}
+  .card::before{content:""; position:absolute; inset:0 0 auto; height:1px; border-radius:var(--radius) var(--radius) 0 0; background:linear-gradient(90deg, transparent, rgba(75,85,99,.4), transparent)}
+  .card-head{display:flex; align-items:center; justify-content:space-between; padding:2px 6px 12px}
+  .card-head .ct{font-family:var(--ui); font-weight:600; font-size:1.04rem; letter-spacing:-.01em}
+  .pill{display:inline-flex; align-items:center; gap:7px; padding:5px 12px 5px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent-ink); font-family:var(--ui); font-weight:600; font-size:.76rem}
+  .pill .pdot{width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pulse 2.4s ease-out infinite}
+  .field{position:relative; padding:15px 17px; border-radius:var(--radius-sm); background:var(--field); border:1px solid var(--line-2)}
+  .field + .field{margin-top:6px}
+  .flabel{display:block; color:var(--muted); font-size:.82rem; font-weight:500; margin-bottom:12px}
+  .frow{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .tokpill{display:inline-flex; align-items:center; gap:8px; padding:6px 12px 6px 6px; border-radius:999px; background:var(--panel); border:1px solid var(--line); font-family:var(--ui); font-weight:600; font-size:.98rem; box-shadow:0 1px 0 rgba(26,21,18,.02)}
+  .tokpill img{width:24px; height:24px; border-radius:50%}
+  .ghostval{color:var(--faint); font-size:.9rem; font-weight:450; white-space:nowrap}
+  .conv{position:relative; height:0}
+  .conv span{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; z-index:3; background:var(--panel); border:4px solid var(--panel); box-shadow:0 0 0 1px var(--line), 0 8px 18px -10px rgba(26,21,18,.4); display:grid; place-items:center; color:var(--accent-ink)}
+  .conv svg{width:17px; height:17px}
+  .yield{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px; padding:12px 15px; border-radius:12px; background:var(--accent-soft)}
+  .yield .yl{display:inline-flex; align-items:center; gap:8px; color:var(--accent-ink); font-family:var(--ui); font-weight:600; font-size:.88rem}
+  .yield .yl svg{width:16px; height:16px}
+  .yield .yr{color:var(--accent-ink); font-weight:600; font-size:.82rem; white-space:nowrap}
+  .cta{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:8px; min-height:52px; border-radius:14px; background:var(--ink); color:#fff; font-family:var(--ui); font-weight:600; font-size:1rem; letter-spacing:-.01em; box-shadow:0 14px 28px -16px rgba(26,21,18,.65); transition:transform .18s ease, filter .18s ease}
+  .cta:hover{transform:translateY(-1px); filter:brightness(1.08)}
+  .note{margin:11px 0 2px; text-align:center; color:var(--faint); font-size:.78rem}
 
-.card{width:min(560px,100%);margin-top:34px;background:var(--surface);border:1px solid var(--line);
-  border-radius:22px;box-shadow:var(--shadow);padding:20px}
-.route{display:flex;align-items:stretch;gap:12px}
-.leg{flex:1;min-width:0;background:var(--inset);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-align:left}
-.leg .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700}
-.chip{display:flex;align-items:center;gap:9px;margin-top:9px;font-weight:800;font-size:1.08rem}
-.chip .ic{width:26px;height:26px;border-radius:50%;flex:none}
-.dir{flex:none;align-self:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);
-  background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--muted);transition:background .15s,color .15s,transform .2s}
-.dir:hover{color:var(--accent);background:var(--accent-soft)}
-.dir .ar{display:inline-block;font-size:1.1rem;line-height:1;transition:transform .2s}
-.act{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:16px;
-  background:var(--accent);color:#fff;font-weight:800;font-size:1.06rem;padding:16px;border-radius:14px;
-  transition:transform .12s,background .2s}
-.act:hover{background:var(--accent-2);transform:translateY(-1px)}
-.note{text-align:center;color:var(--faint);font-size:.78rem;margin-top:12px}
+  /* ---------- how it works ---------- */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .step{padding:24px 22px; background:var(--panel); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow-soft); border-top:3px solid var(--accent)}
+  .step .num{font-family:var(--ui); font-weight:700; font-size:.92rem; color:var(--accent-ink)}
+  .step h3{margin:12px 0 8px; font-family:var(--ui); font-weight:600; font-size:1.12rem; color:var(--ink); letter-spacing:-.01em}
+  .step p{color:var(--muted); font-size:.94rem; line-height:1.55}
 
-.foot{text-align:center;padding:20px 24px 26px;color:var(--faint);font-size:.85rem}
-.foot b{color:var(--muted);font-weight:700}
+  /* ---------- why / rewards ---------- */
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .ben{padding:24px 22px; background:var(--panel); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow-soft)}
+  .ben .ico{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--accent-soft); color:var(--accent-ink); margin-bottom:14px}
+  .ben .ico svg{width:21px; height:21px}
+  .ben h3{font-family:var(--ui); font-weight:600; font-size:1.12rem; color:var(--ink); letter-spacing:-.01em}
+  .ben p{margin-top:8px; color:var(--muted); font-size:.94rem; line-height:1.55}
 
-@media(max-width:620px){
-  .nav{display:none}
-  .route{flex-direction:column}
-  .dir{align-self:center}
-  .dir .ar{transform:rotate(90deg)}
-  .stage h1{font-size:clamp(2rem,9vw,2.6rem)}
-  .sub{margin-top:12px}
-  .card{margin-top:22px}
-}
+  /* ---------- networks strip ---------- */
+  .netband{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px; padding:22px 24px; background:var(--panel); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow-soft)}
+  .netband .nt{font-family:var(--ui); font-weight:600; color:var(--ink); font-size:1.02rem; max-width:34ch}
+  .nets{display:flex; flex-wrap:wrap; gap:9px}
+  .net{display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border:1px solid var(--line); border-radius:999px; background:var(--field); font-family:var(--ui); font-weight:600; font-size:.88rem; color:var(--ink)}
+  .net .nd{width:8px; height:8px; border-radius:50%; background:var(--accent)}
+  .netband .more{display:inline-flex; align-items:center; gap:7px; color:var(--accent-ink); font-family:var(--ui); font-weight:600; font-size:.92rem; white-space:nowrap}
+  .netband .more svg{width:15px; height:15px}
 
+  /* ---------- FAQ (2-col grid of cards) ---------- */
+  .faq{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+  .qa{padding:22px; background:var(--panel); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-soft)}
+  .qa .qn{font-family:var(--ui); font-weight:700; font-size:.8rem; color:var(--accent-ink); letter-spacing:.04em}
+  .qa h3{margin:8px 0 8px; font-family:var(--ui); font-weight:600; font-size:1.08rem; color:var(--ink); letter-spacing:-.01em}
+  .qa p{color:var(--muted); font-size:.95rem; line-height:1.6}
+  .qa a:not(.cite){color:var(--accent-ink); font-weight:600; box-shadow:inset 0 -.34em 0 var(--accent-soft)}
 
-  
-.footer {
-  text-align: center !important;
-}
+  /* ---------- related ---------- */
+  .related{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .rel{display:flex; flex-direction:column; gap:7px; padding:22px; background:var(--panel); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow-soft); transition:transform .16s ease, border-color .16s ease}
+  .rel:hover{transform:translateY(-2px); border-color:rgba(75,85,99,.35)}
+  .rel .rt{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:var(--ui); font-weight:600; font-size:1.05rem; color:var(--ink); letter-spacing:-.01em}
+  .rel .rt svg{width:16px; height:16px; color:var(--accent-ink); flex:none}
+  .rel p{color:var(--muted); font-size:.9rem; line-height:1.5}
+
+  /* ---------- footer ---------- */
+  .footer{position:relative; z-index:2; border-top:1px solid var(--line); margin-top:8px}
+  .footer .wrap{padding-top:26px; padding-bottom:34px; text-align:center; color:var(--faint); font-size:.84rem}
+  .footer b{color:var(--muted); font-weight:600}
+
+  @keyframes pulse{0%{box-shadow:0 0 0 0 var(--accent-soft)} 70%{box-shadow:0 0 0 8px rgba(75,85,99,0)} 100%{box-shadow:0 0 0 0 rgba(75,85,99,0)}}
+
+  @media (max-width:920px){
+    .nav{display:none}
+    .hero{grid-template-columns:1fr; gap:30px}
+    .card{margin:0 auto}
+    .hero h1{font-size:clamp(2.8rem,12vw,3.8rem)}
+    .deck{max-width:none}
+    .steps,.grid3,.faq,.related{grid-template-columns:1fr}
+    .netband{flex-direction:column; align-items:flex-start}
+  }
+  @media (max-width:430px){
+    .chips{gap:7px}
+    .primary,.ghost{width:100%; justify-content:center}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important; transition-duration:.01ms!important}}
   </style>
 </head>
 <body>
+  <div class="bg" aria-hidden="true"><div class="glow"></div><div class="dots"></div></div>
+
   <header class="topbar">
-    <div class="brand">
+    <a class="brand" href="./">
       <img src="favicon.png" width="30" height="30" alt="">
       <span>MNT Staking</span>
-    </div>
+    </a>
     <span class="spacer"></span>
     <nav class="nav" aria-label="Main Navigation">
       <a href="how-it-works/">How it works</a>
@@ -108,11 +191,217 @@ p{margin:0}
       <a href="supported-chains/">Supported Chains</a>
     </nav>
   </header>
-  <main class="stage" style="padding: 100px 24px; text-align: center; max-width: 800px; margin: 0 auto;">
-    <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 24px; font-weight: 800;">MNT Staking</h1>
-    <p class="value" style="font-size: 1.25rem; opacity: 0.8; margin-bottom: 40px; line-height: 1.6;">Secure, non-custodial gateway for decentralized operations. Connect your Web3 wallet to enter the portal.</p>
-    <a class="open-app" href="dashboard/" style="display: inline-flex; justify-content: center; align-items: center; min-height: 52px; padding: 0 32px; border-radius: 9999px; background: var(--accent, #625bf3); color: #fff; font-weight: 700; text-decoration: none; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: transform 0.2s ease;">Open App Dashboard</a>
+
+  <main>
+    <!-- HERO -->
+    <section class="wrap hero">
+      <div class="copy">
+        <span class="eyebrow"><span class="dot"></span>Non-custodial staking</span>
+        <h1>MNT Staking</h1>
+        <p class="deck">MNT Staking gives Mantle holders a cleaner way to put MNT to work from their own wallet on a <a class="cite" href="https://www.mantle.xyz/" rel="nofollow noopener noreferrer">token-governed network</a> - <strong>review live staking terms, keep custody, and sign only when the app makes the position clear.</strong></p>
+        <ul class="chips">
+          <li>Non-custodial</li>
+          <li>MNT focused</li>
+          <li>Live terms in app</li>
+          <li>Wallet controlled</li>
+        </ul>
+        <div class="cta-row">
+          <a class="primary" href="dashboard/">
+            Open App
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="ghost" href="how-it-works/">
+            How it works
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <section class="card" aria-label="Stake preview">
+        <div class="card-head">
+          <span class="ct">Stake MNT</span>
+          <span class="pill"><span class="pdot"></span>Preview</span>
+        </div>
+        <div class="field">
+          <span class="flabel">Stake</span>
+          <div class="frow">
+            <span class="tokpill"><img src="mnt.png" alt="MNT">MNT</span>
+            <span class="ghostval">Amount in app</span>
+          </div>
+        </div>
+        <div class="conv">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+        </div>
+        <div class="field">
+          <span class="flabel">Position</span>
+          <div class="frow">
+            <span class="tokpill"><img src="mnt.png" alt="MNT">MNT</span>
+            <span class="ghostval">Balance in app</span>
+          </div>
+        </div>
+        <div class="yield">
+          <span class="yl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M21 7v5M21 7h-5"/></svg>
+            Est. APR
+          </span>
+          <span class="yr">Live rate in app</span>
+        </div>
+        <a class="cta" href="dashboard/">Open App</a>
+        <p class="note">Preview only &middot; non-custodial &middot; live terms in the app</p>
+      </section>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="wrap sec" id="how">
+      <div class="sec-head">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>How it works</span>
+        <h2 class="h2">MNT staking in three steps</h2>
+        <p>Stake from your wallet, not from an exchange account. The app keeps the flow focused on the asset, the network, the live terms, and the transaction you are about to sign.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="num">Step 01</span>
+          <h3>Connect your wallet</h3>
+          <p>Open the app and connect your self-custody wallet. You stay in charge of keys, approvals, and every signature from start to finish.</p>
+        </div>
+        <div class="step">
+          <span class="num">Step 02</span>
+          <h3>Choose MNT and review terms</h3>
+          <p>Select MNT, confirm the supported chain, and review the live staking details shown in the dashboard before committing capital.</p>
+        </div>
+        <div class="step">
+          <span class="num">Step 03</span>
+          <h3>Sign and manage</h3>
+          <p>Approve only the transaction you intend to make, then track the position, rewards display, and unstaking options directly in the app.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY / REWARDS -->
+    <section class="wrap sec" id="why">
+      <div class="sec-head">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M21 7v5M21 7h-5"/></svg>Why MNT staking</span>
+        <h2 class="h2">Make MNT productive without giving up control</h2>
+      </div>
+      <div class="grid3">
+        <div class="ben">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5"/></svg></span>
+          <h3>Focused on MNT</h3>
+          <p>The flow is built around the Mantle ecosystem token, an <a class="cite" href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/" rel="nofollow noopener noreferrer">ERC-20 token model</a>, and the network context your wallet will sign against.</p>
+        </div>
+        <div class="ben">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 5v5l3 3"/></svg></span>
+          <h3>Live yield context</h3>
+          <p>Rates, availability, timing, and exit details can move with market conditions, so the app presents live information instead of static promises.</p>
+        </div>
+        <div class="ben">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.5M21 4v5h-5"/></svg></span>
+          <h3>Built for DeFi use</h3>
+          <p>MNT Staking fits users who want a direct wallet workflow while still comparing broader <a class="cite" href="https://defillama.com/yields" rel="nofollow noopener noreferrer">DeFi yield markets</a> before they decide.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NETWORKS -->
+    <section class="wrap sec" id="networks">
+      <div class="netband">
+        <p class="nt">MNT staking support depends on the currently enabled wallet network, token contract, and app route.</p>
+        <div class="nets">
+          <span class="net"><span class="nd"></span>Mantle</span>
+          <span class="net"><span class="nd"></span>Ethereum</span>
+          <span class="net"><span class="nd"></span>EVM Wallets</span>
+          <span class="net"><span class="nd"></span>MNT</span>
+          <span class="net"><span class="nd"></span>Live App Routes</span>
+        </div>
+        <a class="more" href="supported-chains/">See supported chains
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="wrap sec" id="faq">
+      <div class="sec-head">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .8-1 1.7M12 17h.01"/></svg>FAQ</span>
+        <h2 class="h2">MNT Staking questions</h2>
+      </div>
+      <div class="faq">
+        <div class="qa">
+          <span class="qn">01</span>
+          <h3>What is MNT Staking?</h3>
+          <p>MNT Staking is a non-custodial DeFi app for staking MNT from your wallet. It helps you review live staking terms, confirm the network, and sign only when you are ready.</p>
+        </div>
+        <div class="qa">
+          <span class="qn">02</span>
+          <h3>Do I keep custody of my MNT?</h3>
+          <p>Yes. You connect your wallet, review the transaction, and sign it yourself. The app does not need your private keys.</p>
+        </div>
+        <div class="qa">
+          <span class="qn">03</span>
+          <h3>How long does staking take?</h3>
+          <p>The dashboard shows the live transaction path, wallet confirmation status, and any staking or unstaking timing before you act.</p>
+        </div>
+        <div class="qa">
+          <span class="qn">04</span>
+          <h3>What does it cost?</h3>
+          <p>Costs depend on the active chain, wallet action, and network conditions. Check the app and a <a class="cite" href="https://mantlescan.xyz/" rel="nofollow noopener noreferrer">Mantle block explorer</a> before confirming.</p>
+        </div>
+        <div class="qa">
+          <span class="qn">05</span>
+          <h3>Is MNT Staking safe?</h3>
+          <p>Crypto staking has smart contract, market, liquidity, and wallet risks. Review token approvals with care; tools for <a class="cite" href="https://revoke.cash/" rel="nofollow noopener noreferrer">token approval management</a> can help you inspect permissions.</p>
+        </div>
+        <div class="qa">
+          <span class="qn">06</span>
+          <h3>Which chains and assets are supported?</h3>
+          <p>The app is focused on MNT and supported wallet routes. See the full list on the <a href="supported-chains/">supported chains</a> page.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED -->
+    <section class="wrap sec" id="explore">
+      <div class="sec-head">
+        <span class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>Learn more</span>
+        <h2 class="h2">Explore MNT Staking</h2>
+      </div>
+      <div class="related">
+        <a class="rel" href="how-it-works/">
+          <span class="rt">How it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          <p>The full walkthrough for connecting, choosing MNT, reviewing terms, and signing.</p>
+        </a>
+        <a class="rel" href="security/">
+          <span class="rt">Security <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          <p>How wallet custody, approvals, contract risk, and transaction review fit the staking flow.</p>
+        </a>
+        <a class="rel" href="supported-chains/">
+          <span class="rt">Supported chains <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+          <p>The networks, wallet routes, and MNT asset context supported by the app.</p>
+        </a>
+      </div>
+    </section>
   </main>
-  <footer class="footer">MNT Staking &mdash; 2026</footer>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>Information on this page is for educational purposes only and is not financial advice.</p>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"WebSite","@id":"https://mnt-staking.github.io/#website","url":"https://mnt-staking.github.io/","name":"MNT Staking"},
+    {"@type":"Organization","@id":"https://mnt-staking.github.io/#org","name":"MNT Staking","url":"https://mnt-staking.github.io/","logo":"https://mnt-staking.github.io/favicon.png"},
+    {"@type":"WebApplication","name":"MNT Staking","applicationCategory":"FinanceApplication","operatingSystem":"Web","url":"https://mnt-staking.github.io/","browserRequirements":"Requires a Web3 wallet","description":"Non-custodial DeFi app for staking MNT, reviewing live terms, and managing a wallet-controlled Mantle token position."},
+    {"@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"What is MNT Staking?","acceptedAnswer":{"@type":"Answer","text":"MNT Staking is a non-custodial DeFi app for staking MNT from your wallet. It helps you review live staking terms, confirm the network, and sign only when you are ready."}},
+      {"@type":"Question","name":"Do I keep custody of my MNT?","acceptedAnswer":{"@type":"Answer","text":"Yes. You connect your wallet, review the transaction, and sign it yourself. The app does not need your private keys."}},
+      {"@type":"Question","name":"How long does staking take?","acceptedAnswer":{"@type":"Answer","text":"The dashboard shows the live transaction path, wallet confirmation status, and any staking or unstaking timing before you act."}},
+      {"@type":"Question","name":"What does it cost?","acceptedAnswer":{"@type":"Answer","text":"Costs depend on the active chain, wallet action, and network conditions. Check the app and a Mantle block explorer before confirming."}},
+      {"@type":"Question","name":"Is MNT Staking safe?","acceptedAnswer":{"@type":"Answer","text":"Crypto staking has smart contract, market, liquidity, and wallet risks. Review token approvals with care; token approval management tools can help you inspect permissions."}},
+      {"@type":"Question","name":"Which chains and assets are supported?","acceptedAnswer":{"@type":"Answer","text":"The app is focused on MNT and supported wallet routes. See the full list on the supported chains page."}}
+    ]}
+  ]}
+  </script>
 </body>
 </html>
