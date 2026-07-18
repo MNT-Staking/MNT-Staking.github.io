@@ -1,0 +1,60 @@
+# MNT Staking
+> An independent, non-custodial dashboard for understanding and comparing ways to put Mantle’s MNT token into on-chain reward or yield positions.
+
+## What is MNT Staking
+MNT staking means locking or depositing MNT in an eligible Mantle rewards campaign or third-party DeFi strategy. Depending on the route, rewards may come from campaign incentives, lending interest, trading fees, or another disclosed source. It is not one universal protocol with a fixed reward rate. It also differs from mETH liquid staking, which stakes ETH and issues a transferable receipt token.
+
+## How it works
+Connect a self-custody EVM wallet and select an available MNT route. Confirm the network, token identity, reward source, lock or withdrawal rules, and fees. Sign any required approval, then sign the separate deposit or lock transaction. Under the hood, the selected protocol’s smart contracts record or custody the position and calculate rewards under that protocol’s rules. Claim rewards or withdraw through the same protocol when its exit conditions allow.
+
+## Key facts
+- MNT is Mantle’s governance and ecosystem utility token.
+- Mantle Mainnet is an EVM network with chain ID 5000, where MNT pays transaction fees.
+- MNT also exists as an ERC-20 token on Ethereum Mainnet, chain ID 1.
+- The Ethereum MNT contract is `0x3c3a81e81dc49A522A592e7622A7E711c06bf354`.
+- Mantle Rewards Station uses MNT locking and allocation mechanics for eligible reward campaigns.
+- Third-party lending, vault, and liquidity-pool positions are separate from official reward campaigns.
+- Retail MNT locking does not make the user an Ethereum validator.
+- This dashboard does not request private keys or take custody of assets.
+- Reward schedules, lock periods, withdrawal queues, and supported routes are protocol-specific.
+
+## Common questions
+**Is MNT staking safe?**  
+It carries smart-contract, token, liquidity, oracle, approval, and protocol-governance risks. Verify the destination contract and current terms before signing.
+
+**Who controls my MNT?**  
+You control transaction signatures through your wallet. After deposit, the selected smart contract may control the tokens until its withdrawal conditions are satisfied.
+
+**What fees apply?**  
+Mantle transactions require MNT for gas; Ethereum transactions require ETH. A route may also charge withdrawal, performance, swap, or liquidity fees disclosed by its protocol.
+
+**How long does staking take?**  
+The deposit appears after on-chain confirmation. Reward accrual, claims, cooldowns, and unlocking can take longer and must be checked for the selected route.
+
+**Which assets and chains are supported?**  
+The dashboard focuses on MNT routes. Availability may differ between native MNT on Mantle and ERC-20 MNT on Ethereum; mETH and cmETH are different assets.
+
+**How do I start?**  
+Use a self-custody EVM wallet, select the correct network, retain its gas token, review live terms, and approve only the exact contract and amount required.
+
+## App
+- Dashboard: https://mnt-staking.github.io/
+- App: https://mnt-staking.github.io/dashboard/
+
+## Official resources
+Mantle MNT Portal: https://www.mantle.xyz/mnt
+Mantle Rewards Station: https://rewards.mantle.xyz/
+Mantle Documentation: https://docs.mantle.xyz/
+Mantle Bridge: https://app.mantle.xyz/bridge
+Mantle Audits: https://docs.mantle.xyz/governance/additional-documents/audits
+Mantle GitHub: https://github.com/mantlenetworkio
+Mantle on X: https://x.com/Mantle_Official
+mETH Protocol: https://www.methprotocol.xyz/
+
+## Data & references
+Mantle Explorer: https://explorer.mantle.xyz/
+Ethereum MNT Contract: https://etherscan.io/token/0x3c3a81e81dc49a522a592e7622a7e711c06bf354
+Mantle on L2BEAT: https://l2beat.com/scaling/projects/mantle
+Mantle on CoinGecko: https://www.coingecko.com/en/coins/mantle
+Mantle on DeFiLlama: https://defillama.com/chain/mantle
+EIP-20 Token Standard: https://eips.ethereum.org/EIPS/eip-20
