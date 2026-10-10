@@ -1,640 +1,1310 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>MNT Staking — Dashboard</title>
-<meta content="MNT Staking explained by a practitioner: how locking MNT in Mantle rewards campaigns and DeFi routes works, custody, lock-ups, risks, and how to start and exit." name="description"/>
-<meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots"/>
-<meta content="#f5f6f8" name="theme-color"/>
-<link href="https://mnt-staking.github.io/" rel="canonical"/>
-<link href="mnt.png" rel="icon" type="image/png"/>
-<link href="mnt.png" rel="apple-touch-icon"/>
-<link href="manifest.webmanifest" rel="manifest"/>
-<link href="og-cover.png" rel="image_src"/>
-<link crossorigin="" href="https://api.coingecko.com" rel="preconnect"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MNT Staking — Earn Yield Securing the Mantle Network</title>
+<meta name="description" content="MNT Staking lets you delegate Mantle's native gas and governance token to a validator and earn rewards while helping secure the network. See how it works, mETH and liquid-staking alternatives, lock-up and withdrawal, and the risks before you stake.">
+<link rel="canonical" href="https://mnt-staking.github.io/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MNT Staking">
+<meta property="og:url" content="https://mnt-staking.github.io/">
+<meta property="og:image" content="https://mnt-staking.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MNT Staking">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Lexend:wght@500;600;700&display=swap">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://mnt-staking.github.io/#website", "url": "https://mnt-staking.github.io/", "name": "MNT Staking — Earn Yield Securing the Mantle Network"}, {"@type": "WebPage", "@id": "https://mnt-staking.github.io/#webpage", "url": "https://mnt-staking.github.io/", "name": "MNT Staking — Earn Yield Securing the Mantle Network", "isPartOf": {"@id": "https://mnt-staking.github.io/#website"}, "description": "MNT Staking lets you delegate Mantle's native gas and governance token to a validator and earn rewards while helping secure the network. See how it works, mETH and liquid-staking alternatives, lock-up and withdrawal, and the risks before you stake.", "datePublished": "2026-10-10", "dateModified": "2026-10-10"}, {"@type": "SoftwareApplication", "name": "MNT Staking", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://mnt-staking.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Staking"}, {"@type": "ListItem", "position": 3, "name": "MNT Staking"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is MNT Staking?", "acceptedAnswer": {"@type": "Answer", "text": "MNT Staking is delegating or depositing MNT, Mantle's native gas and governance token, to a validator so the network can use that stake to help secure consensus, in exchange for a share of the rewards it generates."}}, {"@type": "Question", "name": "How does MNT Staking work?", "acceptedAnswer": {"@type": "Answer", "text": "You choose a validator, delegate your MNT to it, and the protocol starts counting your stake toward that validator's weight almost immediately. Rewards accrue on a schedule and typically compound unless you claim them."}}, {"@type": "Question", "name": "What is mETH and how does it relate to MNT Staking?", "acceptedAnswer": {"@type": "Answer", "text": "mETH is Mantle's liquid-staking token on the Ethereum side of its ecosystem, and it illustrates the same liquid-staking pattern now extending to MNT itself: a receipt token that tracks your stake while staying usable elsewhere."}}, {"@type": "Question", "name": "Is MNT Staking locked up?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Ending a native MNT Staking position requires an unbonding period before the tokens unlock and become a normal, transferable balance again; liquid-staking receipt tokens avoid this by trading freely while the underlying stake keeps earning."}}, {"@type": "Question", "name": "What are the main risks of MNT Staking?", "acceptedAnswer": {"@type": "Answer", "text": "Validator slashing or extended downtime can reduce the stake backing a validator, and liquid-staking products add smart-contract and market-depth risk on top of that. Reviewing validator track records and protocol audits limits both."}}, {"@type": "Question", "name": "Does MNT Staking affect governance?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. MNT is Mantle's governance token, and some designs let staked MNT retain or gain voting weight, so a decision to stake can carry voting consequences alongside the yield."}}, {"@type": "Question", "name": "Do I need to give up custody for MNT Staking?", "acceptedAnswer": {"@type": "Answer", "text": "No. Delegating keeps your MNT in your own wallet while the validator does the operational work, and no legitimate validator or staking product will ever ask for your seed phrase."}}]}]}</script>
 <style>
-/* MNT Staking — independent single-page hub. */
-:root {
-  color-scheme: light;
-  --bg: #f5f6f8; --surface: #ffffff; --panel: #ffffff; --raised: #f1f3f6;
-  --line: rgba(17, 24, 39, 0.10); --line-2: rgba(17, 24, 39, 0.16);
-  --ink: #0e1016; --text: #464d59; --muted: #6a7280; --faint: #98a0ad;
-  --accent: #3d5de6; --accent-2: #2c45c8; --accent-soft: rgba(61, 93, 230, 0.10); --accent-glow: rgba(61, 93, 230, 0.22);
-  --cyan: #0e93a8; --cta: #3d5de6; --cta-ink: #ffffff;
-  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px;
-  --mono: ui-monospace, "SF Mono", SFMono-Regular, "Roboto Mono", Menlo, Consolas, monospace;
-  --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --ease: cubic-bezier(0.22, 0.7, 0.24, 1);
+:root{--bg:#FBFAF7;--surface:#FFFFFF;--text:#1A1608;--muted:#6B6248;--accent:#CA8A04;--accent-ink:#1A1400;--radius:16px;--display:"Lexend";--body:"IBM Plex Sans"}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
 body {
-  margin: 0; min-width: 320px;
-  color: var(--text); background: var(--bg);
-  font-family: var(--font); font-size: 15px; line-height: 1.55;
-  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  margin: 0;
+  min-width: 280px;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
 }
-a { color: inherit; text-decoration: none; }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 8px; }
-img { display: block; max-width: 100%; }
-.skip { position: absolute; left: -999px; }
-.skip:focus { left: 12px; top: 12px; z-index: 99; padding: 8px 14px; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 750; }
-
-.shell { display: flex; min-height: 100dvh; }
-
-/* ───────── sidebar (off-canvas drawer) ───────── */
-.sidebar {
-  position: fixed; top: 0; left: 0; z-index: 70;
-  width: min(288px, 86vw); height: 100vh; height: 100dvh; overflow-y: auto;
-  display: flex; flex-direction: column; padding: 16px 12px 14px;
-  background: var(--surface); border-right: 1px solid var(--line);
-  transform: translateX(-100%); transition: transform 0.24s var(--ease);
-  box-shadow: 24px 0 70px rgba(17, 24, 39, 0.15);
+::selection {
+  color: var(--accent-ink);
+  background: var(--accent);
 }
-.sidebar.is-open { transform: none; }
-.scrim { position: fixed; inset: 0; z-index: 65; background: rgba(17, 24, 39, 0.30); opacity: 0; pointer-events: none; transition: opacity 0.24s var(--ease); }
-.scrim.is-open { opacity: 1; pointer-events: auto; }
-html:not(.js) .sidebar { position: static; transform: none; width: 262px; height: auto; box-shadow: none; }
-html:not(.js) .scrim, html:not(.js) .nav-toggle { display: none; }
-.side-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 2px 8px 6px; }
-.brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
-.brand-logo { width: 32px; height: 32px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
-.brand-logo img { width: 20px; height: 20px; border-radius: 6px; }
-.brand-name { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
-.nav-label { margin: 14px 12px 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--faint); }
-.nav-item { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 9px; color: var(--text); font-size: 14px; font-weight: 600; transition: color 150ms var(--ease), background-color 150ms var(--ease); }
-.ni-ico { width: 18px; height: 18px; flex: 0 0 auto; color: var(--muted); }
-.ni-ext { margin-left: auto; color: var(--faint); font-size: 12px; }
-.nav-item:hover { color: var(--ink); background: rgba(17, 24, 39, 0.04); }
-.nav-item:hover .ni-ico { color: var(--text); }
-.nav-item.is-active { color: var(--accent-2); background: transparent; }
-.nav-item.is-active .ni-ico { color: var(--accent-2); }
-.nav-group { border-radius: 9px; }
-.nav-group summary { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 9px; color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; transition: color 150ms var(--ease), background-color 150ms var(--ease); }
-.nav-group summary::-webkit-details-marker { display: none; }
-.nav-group summary .ni-ico { color: var(--muted); }
-.nav-group summary .chev { width: 15px; height: 15px; margin-left: auto; color: var(--faint); transition: transform 200ms var(--ease); }
-.nav-group summary:hover { color: var(--ink); background: rgba(17, 24, 39, 0.04); }
-.nav-group[open] summary { color: var(--ink); }
-.nav-group[open] summary .ni-ico { color: var(--text); }
-.nav-group[open] summary .chev { transform: rotate(180deg); }
-@media (prefers-reduced-motion: reduce) { .nav-group summary .chev { transition: none; } }
-.nav-sub { display: flex; flex-direction: column; gap: 1px; padding: 2px 0 8px 42px; }
-.nav-sub a { display: flex; align-items: baseline; gap: 7px; padding: 6px 10px; border-radius: 8px; color: var(--muted); font-size: 12.5px; font-weight: 550; transition: color 150ms var(--ease), background-color 150ms var(--ease); }
-.nav-sub a small { color: var(--faint); font-size: 10.5px; font-weight: 500; }
-.nav-sub a:hover { color: var(--accent-2); background: rgba(17, 24, 39, 0.04); }
-.nav-sub a:hover small { color: var(--muted); }
-.sidebar-foot { margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line); }
-.disclose { margin: 8px 10px 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
-.disclose strong { color: var(--text); font-weight: 700; }
-.fine { margin: 6px 10px 0; font-size: 10.5px; line-height: 1.45; color: var(--faint); }
-.nav-toggle { display: inline-flex; width: 38px; height: 38px; flex: 0 0 auto; position: relative; padding: 0; border: 1px solid var(--line-2); border-radius: 10px; background: var(--raised); color: var(--ink); cursor: pointer; }
-.nav-toggle .bar { position: absolute; left: 10px; right: 10px; height: 2px; border-radius: 2px; background: currentColor; transition: transform 0.22s var(--ease), opacity 0.18s var(--ease); }
-.nav-toggle .bar:nth-child(1) { top: 13px; } .nav-toggle .bar:nth-child(2) { top: 18px; } .nav-toggle .bar:nth-child(3) { top: 23px; }
-.sidebar.is-open .nav-toggle .bar:nth-child(1) { transform: translateY(5px) rotate(45deg); }
-.sidebar.is-open .nav-toggle .bar:nth-child(2) { opacity: 0; }
-.sidebar.is-open .nav-toggle .bar:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
-
-/* persistent header: hamburger + logo + H1 */
-.topbar-left { display: flex; align-items: center; gap: 12px 14px; min-width: 0; flex-wrap: wrap; }
-.menu-btn { display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 38px; flex: 0 0 auto; padding: 0 9px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--raised); color: var(--ink); cursor: pointer; }
-.menu-btn .bar { display: block; height: 2px; width: 100%; border-radius: 2px; background: currentColor; transition: transform 0.22s var(--ease), opacity 0.18s var(--ease); }
-.menu-btn:hover { border-color: var(--accent); color: var(--accent-2); }
-.shell.nav-open .menu-btn .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.shell.nav-open .menu-btn .bar:nth-child(2) { opacity: 0; }
-.shell.nav-open .menu-btn .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-.topbar-logo { width: 32px; height: 32px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; background: var(--raised); box-shadow: inset 0 0 0 1px var(--line-2); }
-.topbar-logo img { width: 20px; height: 20px; border-radius: 6px; }
-h1.wordmark { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); line-height: 1; white-space: nowrap; }
-html:not(.js) .menu-btn { display: none; }
-
-/* ───────── main / topbar ───────── */
-.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.topbar { position: relative; z-index: 40; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 14px 26px; border-bottom: 0; background: transparent; }
-.topbar-right { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; }
-.mode-switch { display: inline-flex; align-items: center; gap: 10px; }
-.ms-label { font-size: 13.5px; font-weight: 700; color: var(--muted); transition: color 150ms var(--ease); }
-.ms-label.is-on { color: var(--ink); }
-.ms-track { position: relative; width: 42px; height: 24px; flex: 0 0 auto; padding: 0; border: 1px solid var(--line-2); border-radius: 999px; background: var(--raised); cursor: pointer; transition: background-color 180ms var(--ease); }
-.ms-knob { position: absolute; top: 50%; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); transform: translateY(-50%); transition: left 200ms var(--ease); }
-.ms-track[aria-checked="true"] { background: var(--accent-soft); border-color: rgba(61, 93, 230, 0.4); }
-.ms-track[aria-checked="true"] .ms-knob { left: 23px; background: var(--accent-2); }
-.ticker { display: flex; align-items: center; flex-wrap: wrap; gap: 3px 16px; min-width: 0; }
-.tick { display: inline-flex; align-items: baseline; gap: 6px; color: var(--faint); font-size: 11px; font-weight: 550; letter-spacing: 0.01em; transition: color 150ms var(--ease); }
-.tick b { color: var(--muted); font-family: var(--mono); font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.tick .ext { color: var(--faint); font-size: 9.5px; transition: color 150ms var(--ease); }
-.tick:hover { color: var(--muted); } .tick:hover b, .tick:hover .ext { color: var(--accent-2); }
-.btn-open { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 10px; color: var(--ink); background: rgba(17, 24, 39, 0.04); font-size: 12.5px; font-weight: 700; white-space: nowrap; transition: border-color 150ms var(--ease), background-color 150ms var(--ease); }
-.btn-open:hover { border-color: var(--accent); color: var(--accent-2); }
-
-/* ───────── first screen: hero + swap card ───────── */
-.stage { position: relative; min-height: calc(100dvh - 56px); width: min(560px, 100%); margin-inline: auto; padding: clamp(16px, 3vh, 40px) 24px clamp(52px, 9vh, 96px); display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: clamp(14px, 3vh, 26px); }
-.hero { text-align: center; margin: 0; }
-.hero-h2 { margin: 0; font-size: clamp(1.5rem, 3.6vw, 2.1rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.12; color: var(--ink); }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) { .hero-h2 { background: linear-gradient(180deg, #0e1016, #3a4c85); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; } }
-.hero-sub { margin: 10px auto 0; max-width: 48ch; font-size: 13.5px; line-height: 1.55; color: var(--text); }
-.hero-sub strong { color: var(--ink); font-weight: 700; }
-.swap-card { border: 1px solid var(--line-2); border-radius: var(--r-xl); background: var(--panel); padding: 16px; }
-.card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 2px; }
-.card-title { margin: 0; font-size: 11.5px; font-weight: 750; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
-.preview-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--accent-2); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.preview-tag > span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.leg { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 16px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--raised); }
-.asset { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border: 1px solid var(--line-2); border-radius: 999px; background: rgba(17, 24, 39, 0.04); color: var(--ink); font-size: 14px; font-weight: 700; }
-.asset .tok { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: #fff; }
-.asset .tok img { width: 26px; height: 26px; }
-.asset .chev-sm { width: 15px; height: 15px; color: var(--muted); }
-.leg-amt { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; min-width: 0; }
-.leg-amt .amount { font-family: var(--mono); font-size: 1.7rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1; }
-.leg-amt .leg-sub { font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); }
-.swap-arrow { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; margin: -12px auto; border: 3px solid var(--panel); border-radius: 12px; background: var(--raised); color: var(--accent-2); cursor: pointer; box-shadow: 0 0 0 1px var(--line-2); transition: transform 220ms var(--ease), color 150ms var(--ease); }
-.swap-arrow svg { width: 17px; height: 17px; }
-.swap-arrow:hover { color: #fff; transform: rotate(180deg); }
-.route-panel { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 13px 15px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--raised); }
-.route-info b { display: block; color: var(--ink); font-size: 13.5px; font-weight: 700; letter-spacing: 0.01em; }
-.route-info span { display: block; margin-top: 2px; color: var(--faint); font-size: 11.5px; }
-.route-tok { display: inline-flex; align-items: center; gap: 7px; color: var(--text); font-size: 13px; font-weight: 650; white-space: nowrap; }
-.route-tok .tok { width: 20px; height: 20px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; }
-.route-tok .tok img { width: 20px; height: 20px; }
-.route-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 4px 2px; border-top: 1px solid var(--line); margin-top: 10px; }
-.route-row span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); }
-.route-row b { color: var(--text); font-size: 12.5px; font-weight: 650; font-variant-numeric: tabular-nums; }
-.swap-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; padding: 15px; border-radius: var(--r-md); color: var(--cta-ink); background: var(--cta); font-size: 15px; font-weight: 750; letter-spacing: 0.01em; transition: filter 150ms var(--ease), transform 150ms var(--ease); }
-.swap-cta:hover { filter: brightness(1.04); transform: translateY(-1px); }
-/* scroll cue at the foot of the first screen */
-.scroll-cue { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; }
-.scroll-cue a { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; color: var(--faint); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
-.scroll-cue a:hover { color: var(--accent-2); }
-.scroll-cue svg { width: 16px; height: 16px; animation: cue 1.8s var(--ease) infinite; }
-@keyframes cue { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
-@media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
-
-/* ───────── merged content (all in initial HTML; revealed on scroll) ───────── */
-.content { width: min(760px, 100%); margin: 0 auto; padding: clamp(56px, 12vh, 140px) 24px 88px; }
-.content .lead-in { padding: clamp(4px, 1vh, 12px) 0 clamp(10px, 2.5vh, 22px); }
-.content .lead-in > p { margin: 0 0 16px; font-size: 15px; line-height: 1.66; color: var(--text); }
-.content .lead-in > p strong { color: var(--ink); font-weight: 700; }
-/* premium feature card (modern-site feel) */
-.content .lead-in .feat{position:relative;width:min(1120px,calc(100vw - 44px));margin-left:50%;transform:translateX(-50%);display:grid;grid-template-columns:1.08fr .92fr;align-items:stretch;background:linear-gradient(165deg,#141824,#0b0e15);border:1px solid rgba(255,255,255,.09);border-radius:28px;overflow:hidden;box-shadow:0 52px 120px -55px rgba(0,0,0,.82)}
-.feat-l{padding:clamp(32px,4vw,64px);display:flex;flex-direction:column;justify-content:center}
-.feat-l h2{margin:0;font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.03;font-weight:800;letter-spacing:-.03em;color:#fff}
-.feat-lead{margin:20px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.9);max-width:48ch}
-.content .lead-in .feat-lead a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);text-underline-offset:3px}
-.content .lead-in .feat-lead a:hover{text-decoration-color:#fff}
-.feat-cta{margin:32px 0 0}
-.content .lead-in .feat-btn{display:inline-flex;align-items:center;gap:10px;padding:17px 38px;border-radius:999px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 50%,#7c4dff));color:#fff;font-weight:750;font-size:16.5px;text-decoration:none;box-shadow:0 20px 44px -12px var(--accent-glow);transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
-.content .lead-in .feat-btn:hover{transform:translateY(-2px);box-shadow:0 26px 56px -14px var(--accent-glow)}
-.feat-btn .arr{transition:transform .18s var(--ease)}
-.content .lead-in .feat-btn:hover .arr{transform:translateX(3px)}
-.feat-more{margin:18px 0 0}
-.feat-readmore{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.7);transition:color .15s var(--ease)}
-.feat-readmore::-webkit-details-marker{display:none}
-.feat-readmore:hover{color:#fff}
-.feat-readmore .chev{width:15px;height:15px;transition:transform .2s var(--ease)}
-.feat-more[open] .feat-readmore .chev{transform:rotate(180deg)}
-.feat-detail{margin:20px 0 0;font-size:14.5px;line-height:1.72;color:rgba(255,255,255,.82)}
-.content .lead-in .feat-detail a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.55);text-underline-offset:3px}
-.feat-more:not([open]) .feat-detail{display:none}
-.content .lead-in .feat-lead{color:rgba(255,255,255,.9)}
-.content .lead-in .feat-detail,.content .lead-in .feat-detail p{color:rgba(255,255,255,.82)}
-.feat-facts{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;margin:18px 0 2px}
-.feat-fact{padding:10px 0;border-top:1px solid rgba(255,255,255,.1)}
-.feat-fact .fl{display:block;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 3px}
-.feat-fact .fv{display:block;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.88)}
-.feat-r{position:relative;overflow:hidden;min-height:clamp(300px,32vw,440px);background:radial-gradient(120% 105% at 70% 22%,color-mix(in srgb,var(--accent) 52%,#1a1030),#0a0d14 70%)}
-.feat-r::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:36px 36px;-webkit-mask:radial-gradient(70% 72% at 64% 36%,#000,transparent 76%);mask:radial-gradient(70% 72% at 64% 36%,#000,transparent 76%)}
-.feat-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:clamp(122px,16vw,166px);height:clamp(122px,16vw,166px);border-radius:34px;display:grid;place-items:center;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.02));box-shadow:0 38px 84px -22px var(--accent-glow),inset 0 0 0 1px rgba(255,255,255,.18)}
-.feat-badge img{width:52%;height:52%;object-fit:contain}
-@media (max-width:860px){
-  .content .lead-in .feat{width:calc(100vw - 28px);grid-template-columns:1fr}
-  .feat-l{padding:30px 22px 32px}
-  .feat-r{min-height:200px}
-  .feat-facts{grid-template-columns:1fr}
+a {
+  color: var(--accent);
+  text-decoration-thickness: .075em;
+  text-underline-offset: .2em;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
 }
-
-.tbl.spec table { min-width: 0; }
-.tbl.spec td:first-child { color: var(--muted); font-weight: 600; white-space: nowrap; width: 1%; }
-.content .sec { border-top: 1px solid var(--line); scroll-margin-top: 66px; }
-.content .sec:first-child { border-top: 0; }
-.content .sec > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(20px, 4vh, 32px) 0; }
-.content .sec > summary::-webkit-details-marker { display: none; }
-.content .sec > summary h2 { margin: 0; font-size: clamp(1.25rem, 2.8vw, 1.6rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); transition: color 150ms var(--ease); }
-.content .sec > summary::after { content: "+"; flex: 0 0 auto; color: var(--accent); font-weight: 700; font-size: 1.5rem; line-height: 1; }
-.content .sec[open] > summary::after { content: "\2212"; }
-.content .sec > summary:hover h2 { color: var(--accent-2); }
-.content .sec-body { padding: 0 0 clamp(22px, 4vh, 34px); }
-.content .sec[open] .sec-body { animation: secdrop 0.22s var(--ease); }
-@keyframes secdrop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .content .sec[open] .sec-body { animation: none; } }
-.content p { margin: 0 0 13px; color: var(--text); }
-.content p strong, .content li strong { color: var(--ink); font-weight: 700; }
-.content ul, .content ol { margin: 0 0 14px; padding-left: 20px; }
-.content li { margin-bottom: 8px; color: var(--text); }
-.content li::marker { color: var(--accent); }
-/* inline source links — blend with the copy, brighten only on hover */
-.content .sec-body a, .content .qa .a a, .content .lead-in a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(17, 24, 39, 0.26); transition: color 150ms var(--ease), text-decoration-color 150ms var(--ease); }
-.content .sec-body a:hover, .content .qa .a a:hover, .content .lead-in a:hover { color: var(--accent-2); text-decoration-color: var(--accent-2); }
-.content .sec-body a.addr { text-decoration-color: rgba(134, 160, 255, 0.32); }
-.cite { margin: 4px 0 0; font-size: 12px; color: var(--faint); }
-.cite a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
-.cite a:hover { color: var(--accent-2); }
-.tbl { width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md); margin: 4px 0 14px; background: var(--panel); }
-.tbl table { border-collapse: collapse; width: 100%; font-size: 13px; min-width: 460px; }
-.tbl th { text-align: left; font-weight: 700; color: var(--accent-2); background: rgba(17, 24, 39, 0.04); padding: 10px 13px; border-bottom: 1px solid var(--line-2); font-size: 11.5px; letter-spacing: 0.02em; }
-.tbl td { padding: 10px 13px; border-bottom: 1px solid var(--line); color: var(--text); vertical-align: top; }
-.tbl tr:last-child td { border-bottom: 0; }
-.tbl td:first-child { color: var(--ink); font-weight: 600; }
-.qa { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); margin: 0 0 10px; overflow: hidden; }
-.qa summary { padding: 15px 18px; color: var(--ink); font-weight: 650; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; }
-.qa summary::-webkit-details-marker { display: none; }
-.qa summary::after { content: "+"; color: var(--accent); font-weight: 700; font-size: 1.15rem; line-height: 1; }
-.qa[open] summary::after { content: "−"; }
-.qa[open] { border-color: var(--line-2); }
-.qa .a { padding: 0 18px 15px; color: var(--text); font-size: 13.5px; }
-.qa .a p { margin: 0 0 8px; }
-.addr { font-family: var(--mono); font-size: 12px; color: var(--accent-2); word-break: break-all; }
-.disclosure-box { margin: 24px 0 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); font-size: 12.5px; line-height: 1.6; color: var(--muted); }
-.disclosure-box strong { color: var(--text); }
-/* scroll-reveal — content is always present; JS only animates it in */
-html.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
-html.js .reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { html.js .reveal { opacity: 1; transform: none; transition: none; } }
-
-/* ───────── responsive ───────── */
-@media (max-width: 560px) {
-  .topbar { padding: 10px 16px; }
-  .stage { padding: 16px 16px 40px; }
-  .content { padding: clamp(40px, 9vh, 90px) 16px 72px; }
-  .ticker { display: none; }
-  .leg-amt .amount { font-size: 1.5rem; }
+a:hover {
+  color: var(--text);
 }
-@media (max-height: 720px) and (min-width: 561px) {
-  .hero-h2 { font-size: clamp(1.35rem, 3.2vw, 1.9rem); }
-  .hero-sub { font-size: 13px; margin-top: 8px; }
-  .swap-card { padding: 13px; }
-  .leg { padding: 12px 14px; }
-  .leg-amt .amount { font-size: 1.45rem; }
-  .route-panel { margin-top: 9px; padding: 11px 14px; }
-  .swap-cta { margin-top: 12px; padding: 13px; }
+a:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: calc(var(--radius) * .35);
 }
-.hero.stake-hero { text-align: center; max-width: 720px; margin: 0 auto; }
-.kicker { margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.2em; font-size: 11px; font-weight: 800; color: var(--accent); }
-.hero.stake-hero .hero-h2 { font-size: clamp(2rem, 5.2vw, 3.1rem); line-height: 1.08; }
-.hero.stake-hero .hero-sub { font-size: 15px; max-width: 54ch; margin-top: 14px; }
-.stake-gateway { margin: 36px auto 0; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.emblem { width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(120% 120% at 30% 25%, #ffffff, #e8ecfb); box-shadow: 0 24px 60px -18px rgba(61,93,230,0.55), inset 0 0 0 1px rgba(61,93,230,0.12); position: relative; }
-.emblem::after { content: ""; position: absolute; inset: -16px; border-radius: 50%; background: radial-gradient(circle, rgba(61,93,230,0.20), transparent 70%); z-index: -1; }
-.emblem img { width: 52px; height: 52px; }
-.gw-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; }
-.gw-chip { border: 1px solid var(--line-2); border-radius: 999px; padding: 7px 15px; font-size: 12.5px; font-weight: 600; color: var(--text); background: var(--panel); }
-.stake-cta { display: inline-flex; align-items: center; gap: 10px; padding: 15px 32px; border-radius: 14px; background: var(--cta); color: var(--cta-ink); font-weight: 800; font-size: 16px; text-decoration: none; box-shadow: 0 16px 38px -10px rgba(61,93,230,0.6); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); }
-.stake-cta:hover { transform: translateY(-2px); box-shadow: 0 22px 48px -12px rgba(61,93,230,0.72); }
-.stake-cta .cta-ico { width: 17px; height: 17px; flex: 0 0 auto; }
-.stake-cta .cta-go { transition: transform 0.18s var(--ease); }
-.stake-cta:hover .cta-go { transform: translateX(4px); }
-.cta-note { margin: 0; font-size: 11.5px; color: var(--faint); letter-spacing: 0.02em; }
-.stage { position: relative; }
-.stage::before { content: ""; position: absolute; top: -6%; left: 50%; transform: translateX(-50%); width: min(780px, 94vw); height: 440px; background: radial-gradient(60% 60% at 50% 38%, rgba(61,93,230,0.11), transparent 72%); z-index: 0; pointer-events: none; }
-.hero, .stake-gateway, .scroll-cue { position: relative; z-index: 1; }
-.field-notes { margin: clamp(28px,5vh,52px) 0 0; padding: 20px 22px; border: 1px solid var(--line-2); border-left: 3px solid var(--accent); border-radius: var(--r-md); background: var(--panel); }
-.field-notes h2 { margin: 0 0 12px; font-size: clamp(1.15rem,2.6vw,1.4rem); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
-.field-notes .fn-body { color: var(--text); font-size: 14px; line-height: 1.66; }
-.field-notes .fn-body strong { color: var(--ink); font-weight: 700; }
-.field-notes .fn-body ul { margin: 8px 0 0; padding-left: 20px; }
-.field-notes .fn-body li { margin-bottom: 6px; }
-.content .sec { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); margin: 0 0 14px; scroll-margin-top: 80px; box-shadow: 0 1px 3px rgba(17,24,39,0.05); transition: box-shadow .24s var(--ease), border-color .24s var(--ease), transform .24s var(--ease); }
-.content .sec:hover { border-color: var(--line-2); box-shadow: 0 14px 34px -16px rgba(17,24,39,0.18); }
-.content .sec[open] { border-color: rgba(61,93,230,0.30); box-shadow: 0 18px 46px -18px rgba(61,93,230,0.24); }
-.content .sec > summary { padding: clamp(17px,2.6vh,24px) clamp(18px,3vw,26px); gap: 18px; border-radius: 16px; }
-.content .sec > summary h2 { font-size: clamp(1.12rem,2.5vw,1.4rem); }
-.content .sec > summary::after { content: ""; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--raised) no-repeat center; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%233d5de6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'); transition: transform .28s var(--ease), background-color .2s var(--ease), border-color .2s var(--ease); }
-.content .sec:hover > summary::after { border-color: var(--accent); }
-.content .sec[open] > summary::after { transform: rotate(180deg); background-color: var(--accent-soft); border-color: rgba(61,93,230,0.42); }
-.content .sec-body { padding: 0 clamp(18px,3vw,26px) clamp(20px,3vh,28px); }
-.content .sec-body > p:first-child, .content .sec-body > ul:first-child, .content .sec-body > ol:first-child { margin-top: 0; }
-.content #faq .qa { border-radius: 12px; margin: 0 0 10px; transition: border-color .2s var(--ease), box-shadow .2s var(--ease); }
-.content #faq .qa:hover { box-shadow: 0 8px 22px -12px rgba(17,24,39,0.14); }
-.content #faq .qa[open] { border-color: rgba(61,93,230,0.28); }
-/* ── stake hero (premium dark band, reference-grade) ── */
-.shero { position: relative; overflow: hidden; min-height: calc(100dvh - 48px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: clamp(48px,9vh,104px) 24px clamp(44px,7vh,84px); background: #0a0d15; color: #fff; border-bottom: 1px solid var(--line); }
-.shero::before { content:""; position:absolute; top:-18%; left:50%; transform:translateX(-50%); width:min(1100px,120vw); height:620px; background: radial-gradient(50% 55% at 50% 40%, var(--accent-glow), transparent 70%); opacity:.95; pointer-events:none; }
-.shero::after { content:""; position:absolute; inset:0; background-image: linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px,transparent 1px); background-size: 30px 30px; -webkit-mask: radial-gradient(80% 70% at 50% 30%, #000, transparent 75%); mask: radial-gradient(80% 70% at 50% 30%, #000, transparent 75%); pointer-events:none; }
-.shero-inner { position: relative; z-index: 2; width: 100%; max-width: 900px; }
-.shero-emblem { width: 76px; height: 76px; margin: 0 auto 26px; border-radius: 22px; display: grid; place-items: center; background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.03)); box-shadow: 0 24px 60px -18px var(--accent-glow), inset 0 0 0 1px rgba(255,255,255,.14); }
-.shero-emblem img { width: 42px; height: 42px; }
-.shero-kicker { margin: 0 0 15px; text-transform: uppercase; letter-spacing: .22em; font-size: 11px; font-weight: 800; color: var(--accent); }
-.shero-h { margin: 0; font-size: clamp(2.1rem,5.6vw,3.5rem); line-height: 1.05; font-weight: 850; letter-spacing: -.03em; color: #fff; }
-.shero-sub { margin: 16px auto 0; max-width: 56ch; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,.66); }
-.shero-sub strong { color: #fff; font-weight: 700; }
-.shero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; justify-content: center; margin: 30px 0 0; }
-.sbtn { display: inline-flex; align-items: center; gap: 9px; padding: 14px 26px; border-radius: 13px; font-weight: 750; font-size: 15px; cursor: pointer; transition: transform .16s var(--ease), box-shadow .16s var(--ease), background-color .16s var(--ease), border-color .16s var(--ease); }
-.sbtn-primary { background: var(--accent); color: #fff; padding: 16px 34px; font-size: 16px; box-shadow: 0 16px 38px -12px var(--accent-glow); }
-.sbtn-primary:hover { transform: translateY(-2px); }
-.sbtn-primary .cta-go { transition: transform .18s var(--ease); }
-.sbtn-primary:hover .cta-go { transform: translateX(3px); }
-.sbtn-ghost { background: rgba(255,255,255,.05); color: #fff; padding: 11px 20px; font-size: 13.5px; border: 1px solid rgba(255,255,255,.17); }
-.sbtn-ghost:hover { border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.09); }
-.shero-kpis { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 44px auto 0; max-width: 900px; }
-.kpi { flex: 1 1 168px; max-width: 240px; display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 11px 14px; text-align: left; }
-.kpi svg { width: 15px; height: 15px; color: var(--accent); flex: none; }
-.kpi span { font-size: 12.5px; font-weight: 650; color: rgba(255,255,255,.84); line-height: 1.3; }
-.shero .scroll-cue { position: absolute; left: 0; right: 0; bottom: 14px; z-index: 2; }
-.shero .scroll-cue a { color: rgba(255,255,255,.5); }
-.shero .scroll-cue a:hover { color: #fff; }
-@media (max-width: 720px) {
-  .shero { min-height: 0; padding: 46px 18px 40px; }
-  .shero-kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .shero .scroll-cue { display: none; }
+img,
+svg,
+video {
+  max-width: 100%;
+  vertical-align: middle;
 }
-/* docs layout (sticky TOC + open sections) */
-.docs{position:relative;width:min(1120px,calc(100vw - 44px));margin-left:50%;transform:translateX(-50%);display:grid;grid-template-columns:236px minmax(0,1fr);gap:clamp(28px,4vw,60px);margin-top:clamp(40px,6vh,72px);align-items:start}
-.toc{position:sticky;top:74px;align-self:start;max-height:calc(100dvh - 96px);overflow:auto}
-.toc-h{margin:0 0 10px;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);padding-left:13px}
-.toc a{display:block;padding:7px 13px;border-left:2px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;line-height:1.35;text-decoration:none;transition:color .15s var(--ease),border-color .15s var(--ease)}
-.toc a:hover{color:var(--ink)}
-.toc a.active{color:var(--accent-2);border-left-color:var(--accent);font-weight:750}
-.doc-main{min-width:0}
-.content .doc-sec{border:1px solid var(--line);border-radius:20px;background:var(--panel);box-shadow:0 1px 3px rgba(17,24,39,.04);margin:0 0 16px;padding:0;scroll-margin-top:82px;transition:box-shadow .26s var(--ease),border-color .26s var(--ease)}
-.content .doc-sec:first-child{border-top:1px solid var(--line)}
-.content .doc-sec:hover{border-color:var(--line-2);box-shadow:0 16px 40px -22px rgba(17,24,39,.18)}
-.content .doc-sec[open]{border-color:var(--line)}
-.content .doc-sec>summary{cursor:default;pointer-events:none;padding:clamp(20px,3vh,28px) clamp(22px,3.2vw,32px) 8px;list-style:none}
-.content .doc-sec>summary::-webkit-details-marker{display:none}
-.content .doc-sec>summary::after{display:none}
-.content .doc-sec>summary h2{font-size:clamp(1.2rem,2.3vw,1.5rem)}
-.content .doc-sec .sec-body{padding:0 clamp(22px,3.2vw,32px) clamp(22px,3.4vh,30px);max-width:74ch}
-.content .doc-sec.field-notes{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:20px;background:var(--panel);box-shadow:0 1px 3px rgba(17,24,39,.04);margin:0 0 16px;padding:clamp(22px,3vh,28px) clamp(22px,3.2vw,32px)}
-.content .doc-sec.field-notes h2{font-size:clamp(1.2rem,2.3vw,1.5rem)}
-.content .doc-sec.field-notes .fn-body{max-width:74ch}
-@media (max-width:900px){
-  .docs{grid-template-columns:1fr;width:calc(100vw - 28px);gap:0}
-  .toc{position:sticky;top:56px;z-index:20;display:flex;gap:8px;overflow-x:auto;max-height:none;background:var(--bg);padding:11px 2px;margin:0 0 6px;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
-  .toc-h{display:none}
-  .toc a{flex:0 0 auto;white-space:nowrap;border-left:0;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:12.5px}
-  .toc a.active{color:var(--accent-2);border-color:var(--accent);background:var(--accent-soft)}
+img,
+video {
+  height: auto;
 }
-.site-foot{width:min(1120px,calc(100vw - 44px));margin:clamp(34px,5vh,60px) auto 0;padding:22px 2px clamp(30px,4vh,48px);color:var(--faint);font-size:12.5px;line-height:1.6}
-.site-foot p{margin:0 0 6px;max-width:82ch}
-.site-foot strong{color:var(--muted);font-weight:700}
-.site-foot .foot-fine{font-size:11.5px}
-  </style>
-<meta content="website" property="og:type"/><meta content="https://mnt-staking.github.io/" property="og:url"/>
-<meta content="MNT Staking — Dashboard" property="og:title"/>
-<meta content="MNT Staking explained by a practitioner: how locking MNT in Mantle rewards campaigns and DeFi routes works, custody, lock-ups, risks, and how to start and exit." property="og:description"/>
-<meta content="MNT Staking" property="og:site_name"/><meta content="https://mnt-staking.github.io/og-cover.png" property="og:image"/>
-<meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="MNT Staking — independent staking dashboard" property="og:image:alt"/>
-<meta content="summary_large_image" name="twitter:card"/><meta content="MNT Staking — Dashboard" name="twitter:title"/>
-<meta content="MNT Staking explained by a practitioner: how locking MNT in Mantle rewards campaigns and DeFi routes works, custody, lock-ups, risks, and how to start and exit." name="twitter:description"/><meta content="https://mnt-staking.github.io/og-cover.png" name="twitter:image"/>
-<script type="application/ld+json">
-  {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "@id": "https://mnt-staking.github.io/#website", "url": "https://mnt-staking.github.io/", "name": "MNT Staking", "inLanguage": "en"}, {"@type": "Thing", "@id": "https://mnt-staking.github.io/#brand", "name": "MNT Staking", "alternateName": ["MNT staking"], "description": "MNT Staking — how it works, rewards, risks, and how to stake, on an independent non-custodial dashboard.", "sameAs": ["https://docs.mantle.xyz/network", "https://docs.mantle.xyz/network/more/audits"]}, {"@type": "WebPage", "@id": "https://mnt-staking.github.io/#webpage", "url": "https://mnt-staking.github.io/", "name": "MNT Staking — Dashboard", "description": "MNT Staking explained by a practitioner: how locking MNT in Mantle rewards campaigns and DeFi routes works, custody, lock-ups, risks, and how to start and exit.", "isPartOf": {"@id": "https://mnt-staking.github.io/#website"}, "about": {"@id": "https://mnt-staking.github.io/#brand"}, "mainEntity": {"@id": "https://mnt-staking.github.io/#brand"}, "inLanguage": "en", "dateModified": "2026-07-21"}, {"@type": "FAQPage", "@id": "https://mnt-staking.github.io/#faq", "mainEntity": [{"@type": "Question", "name": "Is MNT staking safe?", "acceptedAnswer": {"@type": "Answer", "text": "It carries smart-contract, token-price, liquidity, oracle, approval, and protocol-governance risks, and none of it is risk-free. You control the signatures from your own wallet, but after deposit the destination contract controls the tokens until its exit conditions are met. Verify the contract and current terms before you sign anything."}}, {"@type": "Question", "name": "How are MNT staking rewards and APY determined?", "acceptedAnswer": {"@type": "Answer", "text": "There is no single rate. Each route sets its own rewards — campaign incentive schedules for official campaigns, borrower interest for lending, trading fees for liquidity pools — and all of them are variable. The current rate for any route is shown in that route's own app; treat any fixed number quoted elsewhere as stale."}}, {"@type": "Question", "name": "How much MNT do I need to start staking?", "acceptedAnswer": {"@type": "Answer", "text": "Retail routes through a self-custody wallet generally have low practical entry points, and there is no validator-style minimum because MNT locking is not validator staking. Check the specific campaign or protocol for any minimums it sets, and budget a little extra MNT or ETH for gas on the relevant network."}}, {"@type": "Question", "name": "How do I unstake MNT, and how long does it take?", "acceptedAnswer": {"@type": "Answer", "text": "You exit through the same protocol you deposited into, under its rules. Campaign locks typically release principal only at the end of the lock period; lending, vault, and pool positions are often more flexible but can involve cooldowns, queues, or available-liquidity constraints. The withdrawal transaction itself confirms on-chain quickly — the schedule around it is what takes time. Check MNT market data on DefiLlama if liquidity conditions matter to your exit."}}, {"@type": "Question", "name": "What are the main ways to stake MNT?", "acceptedAnswer": {"@type": "Answer", "text": "Two real routes: lock MNT in official reward campaigns through Mantle's Rewards Station, or deposit it into third-party DeFi — lending, vaults, or liquidity pools — on Mantle or Ethereum. The first keeps you in Mantle's own contracts with per-campaign lock terms; the second is often more liquid but adds that protocol's contract and counterparty risk. mETH liquid staking is a separate product that stakes ETH, not MNT."}}, {"@type": "Question", "name": "Is this the official Mantle staking site?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is an independent, non-custodial reference dashboard — it does not request private keys, take custody of assets, or operate any staking contracts. For official campaign terms, go directly to the Mantle Rewards Station and confirm everything there before staking."}}]}]}
-  </script>
-<link href="dashboard/index.html" rel="prefetch"/><link href="dashboard/index.html" rel="prerender"/></head>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  color: var(--text);
+  font-family: var(--display);
+  font-weight: 650;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+p,
+ul,
+ol,
+dl,
+figure,
+blockquote {
+  margin-top: 0;
+}
+[hidden] {
+  display: none !important;
+}
+.c559958 {
+  width: min(100% - 6rem, 1240px);
+  margin-inline: auto;
+}
+.cf8b0eb {
+  position: absolute;
+  z-index: 20;
+  top: 1rem;
+  left: 1rem;
+  padding: .75rem 1.15rem;
+  transform: translateY(-180%);
+  border-radius: var(--radius);
+  color: var(--accent-ink);
+  background: var(--accent);
+  font-weight: 600;
+}
+.cf8b0eb:focus {
+  transform: translateY(0);
+}
+.cb05a2c {
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, var(--bg));
+  background: var(--bg);
+}
+.cd04f02 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 88px;
+  padding-block: 1rem;
+}
+.c544b34 {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 650;
+  letter-spacing: -.04em;
+}
+.ca7747e {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--surface));
+  border-radius: calc(var(--radius) * .55);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+.ca7747e svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.c88ed06 {
+  display: inline-flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .5rem 0;
+  color: var(--text);
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.c88ed06:hover {
+  color: var(--accent);
+}
+.cb6338f {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 15%, var(--bg));
+  background:
+    radial-gradient(ellipse at 95% 12%, color-mix(in srgb, var(--accent) 14%, transparent), color-mix(in srgb, var(--accent) 0%, transparent) 62%),
+    linear-gradient(130deg, var(--surface), color-mix(in srgb, var(--accent) 5%, var(--bg)) 70%, var(--bg));
+}
+.cb6338f::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 520px;
+  height: 520px;
+  right: -240px;
+  bottom: -310px;
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 65px color-mix(in srgb, var(--accent) 3%, transparent), 0 0 0 130px color-mix(in srgb, var(--accent) 2%, transparent);
+  pointer-events: none;
+}
+.cf9ad86 {
+  padding-block: 1.6rem 5rem;
+}
+.ca2813f {
+  margin-bottom: 3.8rem;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+.c0ddcf6 {
+  display: inline;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: inherit;
+  text-decoration: none;
+}
+.c0ddcf6 a,
+a.c0ddcf6 {
+  color: var(--muted);
+  text-decoration: none;
+}
+.c0ddcf6 a:hover,
+a.c0ddcf6:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.ca2813f ol,
+.ca2813f ul,
+ol.c0ddcf6,
+ul.c0ddcf6 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .45rem .7rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.ca2813f li {
+  display: inline;
+}
+.ca2813f [aria-current="page"] {
+  color: var(--text);
+}
+.c0ca737 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-bottom: 1.35rem;
+  color: var(--accent);
+  font-size: .875rem;
+  font-weight: 600;
+}
+.c4ccb03 {
+  padding-block: .3rem;
+}
+.ccd5350 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  max-width: 180px;
+  padding: .4rem .65rem;
+  border: 1px solid color-mix(in srgb, var(--text) 9%, var(--surface));
+  border-radius: calc(var(--radius) * .6);
+  background: var(--surface);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
+  font-size: .8rem;
+  line-height: 1;
+}
+.ccd5350:empty {
+  display: none;
+}
+.ccd5350 img,
+.ccd5350 svg {
+  display: block;
+  width: auto;
+  max-width: 148px;
+  height: 24px;
+  object-fit: contain;
+}
+.cb6338f h1 {
+  max-width: 1050px;
+  margin: 0 0 1.5rem;
+  font-family: var(--display);
+  font-size: clamp(2.7rem, 5.7vw, 5.1rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -.055em;
+  overflow-wrap: anywhere;
+}
+.cb6338f h1 em {
+  color: var(--accent);
+  font-style: normal;
+}
+.cb6338f h1 a {
+  color: inherit;
+}
+.cff98fb {
+  max-width: 760px;
+  margin: 0 0 2.1rem;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.c1fb9de {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.7rem;
+  min-height: 54px;
+  padding: .85rem 1.35rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--accent-ink);
+  background: var(--accent);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 18%, transparent);
+  font-family: var(--body);
+  font-size: .95rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.c1fb9de:hover {
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 92%, var(--text));
+  box-shadow: 0 9px 24px color-mix(in srgb, var(--accent) 24%, transparent);
+  transform: translateY(-2px);
+}
+.c7258ce {
+  font-family: var(--body);
+  font-size: 1.25em;
+  line-height: 1;
+}
+.cb79792 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem 4.5rem;
+}
+.cc6374e {
+  min-width: 0;
+  padding: 1.2rem 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--text) 9%, var(--surface));
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--text) 3%, transparent);
+}
+.cc6374e strong {
+  display: block;
+  margin-bottom: .2rem;
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -.02em;
+}
+.cc6374e span {
+  display: block;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.5;
+}
+.c289794 {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  padding-bottom: 4.5rem;
+}
+.c7210ea {
+  position: sticky;
+  top: 2rem;
+  min-width: 0;
+  max-height: calc(100dvh - 4rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--muted) 35%, var(--surface)) var(--surface);
+  padding: .3rem .75rem 1rem .25rem;
+}
+.c8514da {
+  margin: 0 0 1.1rem;
+  color: var(--text);
+  font-family: var(--display);
+  font-size: .95rem;
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+.ce37374 {
+  display: grid;
+  gap: .3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ce37374 li {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+.cfec68f {
+  position: relative;
+  display: block;
+  padding: .7rem .9rem .7rem 1.1rem;
+  border-inline-start: 2px solid color-mix(in srgb, var(--muted) 18%, var(--bg));
+  border-radius: 0 calc(var(--radius) * .55) calc(var(--radius) * .55) 0;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .85rem;
+  font-weight: 450;
+  line-height: 1.5;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.cfec68f:hover {
+  border-inline-start-color: color-mix(in srgb, var(--accent) 45%, var(--bg));
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+}
+.cfec68f[aria-current="location"] {
+  border-inline-start-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 9%, var(--bg));
+  font-weight: 650;
+}
+.c0f315d {
+  margin: 1.65rem 0 0;
+  padding: 1.2rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, var(--bg));
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.65;
+}
+.cf4308f {
+  min-width: 0;
+}
+.cd675d9 {
+  padding: clamp(1.3rem, 3vw, 2.3rem);
+  margin-bottom: 3.75rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--surface));
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 10px 35px color-mix(in srgb, var(--text) 5%, transparent);
+  scroll-margin-top: 2rem;
+}
+.cd04086 {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .5rem 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+.cd04086 h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.3vw, 1.85rem);
+  letter-spacing: -.04em;
+}
+.cd04086 p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .8rem;
+}
+.c6ecc2b {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) var(--surface);
+}
+.c9e0ac0 {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: .925rem;
+  line-height: 1.6;
+  text-align: left;
+}
+.c9e0ac0 caption {
+  padding: 0 0 1rem;
+  color: var(--muted);
+  font-size: .85rem;
+  text-align: left;
+}
+.c9e0ac0 th,
+.c9e0ac0 td {
+  padding: 1.05rem .85rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 9%, var(--surface));
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.c9e0ac0 th {
+  width: 37%;
+  color: var(--muted);
+  font-weight: 500;
+}
+.c9e0ac0 thead th {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+  font-weight: 650;
+}
+.c9e0ac0 td {
+  font-weight: 550;
+}
+.c9e0ac0 tr > :first-child {
+  padding-left: 0;
+}
+.c9e0ac0 tr > :last-child {
+  padding-right: 0;
+}
+.c9e0ac0 tbody:last-child tr:last-child > *,
+.c9e0ac0 > tr:last-child > * {
+  border-bottom: 0;
+}
+.c9e0ac0 td p:last-child,
+.c9e0ac0 th p:last-child {
+  margin-bottom: 0;
+}
+.cc3cfa8 {
+  min-width: 0;
+}
+.cdd745c {
+  min-width: 0;
+  margin: 0 0 3.4rem;
+  scroll-margin-top: 2rem;
+}
+.cdd745c + .cdd745c {
+  padding-top: 2.8rem;
+  border-top: 1px solid color-mix(in srgb, var(--text) 11%, var(--bg));
+}
+.c9b1816 {
+  margin: 0 0 1.25rem;
+  color: var(--text);
+  font-family: var(--display);
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -.045em;
+}
+.c827d9b {
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.c827d9b > :last-child {
+  margin-bottom: 0;
+}
+.c827d9b p {
+  margin: 0 0 1.3rem;
+  text-wrap: pretty;
+}
+.c827d9b h3 {
+  margin: 2rem 0 .9rem;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -.025em;
+}
+.c827d9b h4,
+.c827d9b h5,
+.c827d9b h6 {
+  margin: 1.6rem 0 .75rem;
+  font-size: 1.075rem;
+  line-height: 1.4;
+}
+.c827d9b h3:first-child,
+.c827d9b h4:first-child {
+  margin-top: 0;
+}
+.c827d9b strong,
+.ceb237d strong {
+  color: var(--text);
+  font-weight: 650;
+}
+.c827d9b ul,
+.c827d9b ol,
+.ceb237d ul,
+.ceb237d ol {
+  margin: 1.2rem 0 1.6rem;
+  padding-left: 1.5rem;
+}
+.c827d9b li,
+.ceb237d li {
+  padding-left: .4rem;
+  margin-block: .55rem;
+}
+.c827d9b li::marker,
+.ceb237d li::marker {
+  color: var(--accent);
+  font-weight: 600;
+}
+.c827d9b li > ul,
+.c827d9b li > ol {
+  margin-block: .5rem;
+}
+.c827d9b li p {
+  margin-bottom: .6rem;
+}
+.c827d9b blockquote {
+  margin: 1.8rem 0;
+  padding: 1.3rem 1.5rem;
+  border-inline-start: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  color: var(--text);
+  font-size: 1.05rem;
+}
+.c827d9b blockquote > :last-child {
+  margin-bottom: 0;
+}
+.c827d9b blockquote cite {
+  display: block;
+  margin-top: .9rem;
+  color: var(--muted);
+  font-size: .85rem;
+  font-style: normal;
+}
+.c827d9b table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 1.7rem 0;
+  overflow-x: auto;
+  border: 1px solid color-mix(in srgb, var(--text) 12%, var(--surface));
+  border-radius: var(--radius);
+  border-spacing: 0;
+  background: var(--surface);
+  font-family: var(--body);
+  font-size: .875rem;
+  line-height: 1.65;
+  text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) var(--surface);
+}
+.c827d9b table caption {
+  padding: .9rem 1rem;
+  color: var(--muted);
+  font-size: .82rem;
+  text-align: left;
+}
+.c827d9b th,
+.c827d9b td {
+  min-width: 125px;
+  padding: 1rem 1.15rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--text) 9%, var(--surface));
+  vertical-align: top;
+}
+.c827d9b th {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  font-weight: 650;
+}
+.c827d9b tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--text) 2%, var(--surface));
+}
+.c827d9b tbody:last-child tr:last-child > * {
+  border-bottom: 0;
+}
+.c827d9b td > :last-child,
+.c827d9b th > :last-child {
+  margin-bottom: 0;
+}
+.c827d9b figure {
+  margin: 1.8rem 0;
+}
+.c827d9b figure img {
+  display: block;
+  border-radius: var(--radius);
+}
+.c827d9b figcaption {
+  margin-top: .7rem;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+.c827d9b code,
+.ceb237d code {
+  padding: .1em .35em;
+  border-radius: calc(var(--radius) * .25);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--text);
+  font-family: var(--body);
+  font-size: .9em;
+}
+.c827d9b pre {
+  overflow-x: auto;
+  padding: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--text) 10%, var(--surface));
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: .875rem;
+  line-height: 1.7;
+}
+.c827d9b pre code {
+  padding: 0;
+  background: var(--surface);
+}
+.c827d9b hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--text) 12%, var(--bg));
+}
+.c827d9b dt {
+  margin-top: 1.1rem;
+  color: var(--text);
+  font-weight: 650;
+}
+.c827d9b dd {
+  margin: .4rem 0 1rem;
+  color: var(--muted);
+}
+.c59b525 {
+  padding-top: 2.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--text) 11%, var(--bg));
+  scroll-margin-top: 2rem;
+}
+.c59b525 > .c9b1816 {
+  margin-bottom: 1.65rem;
+}
+.c727cd0 {
+  margin: 0 0 .8rem;
+  border: 1px solid color-mix(in srgb, var(--text) 11%, var(--surface));
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 3px 12px color-mix(in srgb, var(--text) 3%, transparent);
+  overflow: clip;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.c727cd0:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--surface));
+}
+.c727cd0[open] {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--surface));
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--text) 4%, transparent);
+}
+.c275b10 {
+  position: relative;
+  display: block;
+  padding: 1.35rem 3.8rem 1.35rem 1.4rem;
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 1.025rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -.015em;
+  list-style: none;
+  cursor: pointer;
+}
+.c275b10::-webkit-details-marker {
+  display: none;
+}
+.c275b10::after {
+  content: "+";
+  position: absolute;
+  top: 1.3rem;
+  right: 1.35rem;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  color: var(--accent);
+  font-family: var(--body);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1;
+}
+.c727cd0[open] > .c275b10::after {
+  content: "−";
+}
+.c727cd0 > .c275b10:focus-visible {
+  outline-offset: -5px;
+}
+.ceb237d {
+  padding: 0 1.4rem 1.45rem;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .95rem;
+  line-height: 1.8;
+}
+.ceb237d > :first-child {
+  margin-top: 0;
+}
+.ceb237d > :last-child {
+  margin-bottom: 0;
+}
+.ceb237d p {
+  margin-bottom: 1rem;
+}
+.c27a738 {
+  padding-block: 3rem 3.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, var(--bg));
+  background: color-mix(in srgb, var(--surface) 70%, var(--bg));
+  scroll-margin-top: 2rem;
+}
+.c0cf136 {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+.c123fd3 h2 {
+  margin-bottom: .7rem;
+  font-size: 1.4rem;
+  letter-spacing: -.035em;
+}
+.c123fd3 p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .85rem;
+  line-height: 1.7;
+}
+.c274331 {
+  min-width: 0;
+}
+.c1d512d {
+  display: grid;
+  gap: .7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--body);
+}
+.c60e88a {
+  display: block;
+  min-width: 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--text) 9%, var(--surface));
+  border-radius: calc(var(--radius) * .75);
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .875rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.c60e88a a,
+a.c60e88a {
+  color: var(--text);
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, var(--surface));
+  text-underline-offset: .25em;
+}
+.c60e88a a:hover,
+a.c60e88a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+.c60e88a p {
+  margin: .4rem 0 0;
+}
+.c60e88a small {
+  color: var(--muted);
+  font-size: .8rem;
+}
+.cca1c12 {
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, var(--bg));
+  background: var(--bg);
+}
+.cbf7996 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  min-height: 100px;
+  padding-block: 1.5rem;
+}
+.ccb94a3 {
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -.025em;
+}
+.c0dfb73 {
+  margin: 0;
+  color: var(--muted);
+  font-size: .8rem;
+}
+.c0dfb73 span {
+  color: var(--text);
+}
+@media (min-width: 1500px) {
+  .cf9ad86 {
+    padding-bottom: 6rem;
+  }
+  .ca2813f {
+    margin-bottom: 4.5rem;
+  }
+  .c289794 {
+    gap: 5.5rem;
+  }
+  .c0cf136 {
+    gap: 5.5rem;
+  }
+}
+@media (max-width: 1050px) {
+  .c559958 {
+    width: calc(100% - 3rem);
+  }
+  .c289794,
+  .c0cf136 {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+  .cb79792 {
+    gap: .75rem;
+  }
+  .cc6374e {
+    padding: 1rem;
+  }
+  .cfec68f {
+    font-size: .8rem;
+  }
+}
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 1rem;
+  }
+  .cd04f02 {
+    min-height: 72px;
+  }
+  .cf9ad86 {
+    padding-block: 1.25rem 3.25rem;
+  }
+  .ca2813f {
+    margin-bottom: 2.6rem;
+  }
+  .cb6338f h1 {
+    max-width: 100%;
+    font-size: clamp(2.45rem, 7.4vw, 3.6rem);
+    letter-spacing: -.045em;
+  }
+  .cff98fb {
+    font-size: 1.05rem;
+  }
+  .cb79792 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-block: 1.2rem 2.5rem;
+  }
+  .c289794 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.3rem;
+    padding-bottom: 3rem;
+  }
+  .c7210ea {
+    position: static;
+    max-height: none;
+    padding: 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--text) 10%, var(--surface));
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .c8514da {
+    margin-bottom: .8rem;
+  }
+  .ce37374 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .4rem .8rem;
+  }
+  .cfec68f {
+    height: 100%;
+    padding-block: .7rem;
+    font-size: .825rem;
+  }
+  .c0f315d {
+    display: none;
+  }
+  .cd675d9 {
+    margin-bottom: 2.5rem;
+  }
+  .cdd745c {
+    margin-bottom: 2.6rem;
+  }
+  .cdd745c + .cdd745c {
+    padding-top: 2.2rem;
+  }
+  .c0cf136 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+  .c27a738 {
+    padding-block: 2.5rem;
+  }
+  .cdd745c,
+  .cd675d9,
+  .c59b525,
+  .c27a738 {
+    scroll-margin-top: 1rem;
+  }
+}
+@media (max-width: 440px) {
+  .c559958 {
+    width: calc(100% - 2rem);
+  }
+  .cd04f02 {
+    gap: 1rem;
+  }
+  .c544b34 {
+    gap: .5rem;
+    font-size: 1.05rem;
+  }
+  .c88ed06 {
+    gap: .45rem;
+    font-size: .8rem;
+  }
+  .c0ca737 {
+    gap: .65rem;
+    margin-bottom: 1.1rem;
+  }
+  .cb6338f h1 {
+    font-size: 2.5rem;
+  }
+  .c1fb9de {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .cc6374e {
+    padding: .9rem;
+  }
+  .cc6374e strong {
+    font-size: .9rem;
+  }
+  .cc6374e span {
+    font-size: .75rem;
+  }
+  .ce37374 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cd675d9 {
+    padding: 1.15rem;
+  }
+  .c9e0ac0 {
+    font-size: .85rem;
+  }
+  .c9e0ac0 th,
+  .c9e0ac0 td {
+    padding-block: .9rem;
+    padding-inline: .5rem;
+  }
+  .c827d9b {
+    font-size: .95rem;
+    line-height: 1.8;
+  }
+  .c827d9b blockquote {
+    padding: 1rem 1.1rem;
+  }
+  .c275b10 {
+    padding: 1.1rem 3rem 1.1rem 1.1rem;
+    font-size: .95rem;
+  }
+  .c275b10::after {
+    top: 1.1rem;
+    right: .9rem;
+  }
+  .ceb237d {
+    padding: 0 1.1rem 1.2rem;
+    font-size: .9rem;
+  }
+  .cbf7996 {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .6rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+  .c1fb9de:hover {
+    transform: none;
+  }
+}
+@media print {
+  body {
+    background: var(--surface);
+    font-size: 10pt;
+  }
+  .c559958 {
+    width: 100%;
+  }
+  .cb05a2c,
+  .cf8b0eb,
+  .c1fb9de,
+  .c7210ea,
+  .cb6338f::after {
+    display: none;
+  }
+  .cb6338f {
+    background: var(--surface);
+  }
+  .cf9ad86 {
+    padding-block: 1rem 2rem;
+  }
+  .ca2813f {
+    margin-bottom: 1.5rem;
+  }
+  .cb6338f h1 {
+    font-size: 32pt;
+  }
+  .cb79792 {
+    margin-bottom: 2rem;
+  }
+  .c289794,
+  .c0cf136 {
+    display: block;
+  }
+  .cd675d9,
+  .cc6374e,
+  .c727cd0 {
+    box-shadow: none;
+  }
+  .c9b1816,
+  .c827d9b h3 {
+    break-after: avoid;
+  }
+  .c727cd0,
+  .c60e88a,
+  .c827d9b tr {
+    break-inside: avoid;
+  }
+  .c123fd3 {
+    margin-bottom: 1rem;
+  }
+}
+</style>
+</head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="shell">
-<main class="main" id="main">
-<header class="topbar">
-<div class="topbar-left">
-<h1 class="wordmark">MNT Staking</h1>
-</div>
-<div class="topbar-right"><div aria-label="Live metrics" class="ticker">
-<a aria-label="MNT" class="tick" href="https://www.coingecko.com/en/coins/mantle" rel="noopener noreferrer" target="_blank"><span>MNT</span> <b id="sig-mantle">…</b> <span aria-hidden="true" class="ext">↗</span></a>
-<a aria-label="Market cap" class="tick" href="https://coinmarketcap.com/currencies/mantle/" rel="noopener noreferrer" target="_blank"><span>Market cap</span> <b id="sig-mc-mantle">…</b> <span aria-hidden="true" class="ext">↗</span></a>
-<a aria-label="ETH" class="tick" href="https://defillama.com/" rel="noopener noreferrer" target="_blank"><span>ETH</span> <b id="sig-ethereum">…</b> <span aria-hidden="true" class="ext">↗</span></a>
-</div>
-</div>
+<a class="cf8b0eb" href="#guide-main">Skip to guide</a>
+<header class="cb05a2c">
+  <div class="c559958 cd04f02">
+    <div class="c544b34">
+      <span class="ca7747e" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5h6a3 3 0 0 1 2 1 3 3 0 0 1 2-1h6v14h-6a3 3 0 0 0-2 1 3 3 0 0 0-2-1H4zM12 6.5v14M7 9h2M15 9h2M7 12h2M15 12h2"/></svg></span>
+      <span>The guide</span>
+    </div>
+    <a class="c88ed06" href="dashboard/">Open app <span class="c7258ce" aria-hidden="true">↗</span></a>
+  </div>
 </header>
-<section class="shero" id="gateway">
-<div class="shero-inner">
-<div class="shero-emblem"><img alt="MNT staking asset on Mnt Staking" height="42" src="mnt.png" width="42"/></div>
-<p class="shero-kicker">Mantle Ecosystem Token</p>
-<h2 class="shero-h">Put Your MNT to Work</h2>
-<p class="shero-sub"><strong>MNT Staking</strong> lets you lock Mantle's MNT into reward campaigns or DeFi positions for variable on-chain rewards — here is how to do it properly.</p>
-<div class="shero-cta">
-<a class="sbtn sbtn-primary" href="dashboard/" rel="noopener noreferrer" target="_blank">Open the staking app <span aria-hidden="true" class="cta-go">↗</span></a>
-<a class="sbtn sbtn-ghost" href="#what">Read the guide</a>
-</div>
-<div class="shero-kpis">
-<div class="kpi"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg><span>Non-custodial routes</span></div>
-<div class="kpi"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg><span>Lock-up varies by route</span></div>
-<div class="kpi"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg><span>Rewards set per protocol</span></div>
-</div>
-</div>
-<div class="scroll-cue"><a href="#what"><span>What is MNT Staking</span><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></a></div>
+<section class="cb6338f" aria-labelledby="guide-title">
+  <div class="c559958 cf9ad86">
+    <nav class="ca2813f" aria-label="Breadcrumb"><nav class="c0ddcf6" aria-label="Breadcrumb"><a href="dashboard/">Home</a> <span>/</span> <span>Staking</span> <span>/</span> <span>MNT Staking</span></nav></nav>
+    <div class="c0ca737"><span class="c4ccb03">A closer look</span><span class="ccd5350"></span></div>
+    <h1 id="guide-title">MNT <em>Staking</em>.</h1>
+    <p class="cff98fb">MNT Staking lets you lock MNT, the native gas and governance token of the Mantle network, with a validator or through a liquid-staking product so your tokens earn rewards while they help secure and operate the chain. You choose between staking directly, delegating to a validator, or minting a liquid-staking token so the position stays usable across Mantle's DeFi while the underlying stake keeps earning. Your MNT stays tied to your own wallet or to the validator you selected, and the rewards, lock-up terms and withdrawal delay are shown before you commit any tokens.</p>
+    <a class="c1fb9de" href="dashboard/">Open dashboard <span class="c7258ce" aria-hidden="true">↗</span></a>
+  </div>
 </section>
-<div class="content">
-<div class="lead-in reveal">
-<div class="feat">
-<div class="feat-l">
-<h2>Mnt Staking Architecture &amp; Yield Overview</h2>
-<p class="feat-lead">MNT Staking is not one protocol with one rate — it is locking or depositing Mantle's <a href="https://www.mantle.xyz/what-is-mnt">MNT token</a> into an eligible rewards campaign, or into a third-party lending, vault, or liquidity position, and letting that protocol's smart contracts accrue whatever its rules pay out.</p>
-<div class="feat-cta"><a class="feat-btn" href="dashboard/" rel="noopener noreferrer" target="_blank">Enter Staking Dashboard <span aria-hidden="true" class="arr">→</span></a></div>
-<details class="feat-more">
-<summary class="feat-readmore">Read more <svg aria-hidden="true" class="chev" fill="none" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg></summary>
-<div class="feat-detail">
-<p>The two practical routes are Mantle's own <a href="https://rewards.mantle.xyz/">Rewards Station</a>, where you lock MNT and allocate it to campaigns, and external DeFi strategies on networks where MNT trades. This page is an independent reference written from a self-custody wallet perspective — it never asks for your keys and takes no custody of your tokens.</p>
-<div class="feat-facts">
-<div class="feat-fact"><span class="fl">Asset / network</span><span class="fv">MNT — Mantle's governance and gas token; native on Mantle Mainnet (chain ID 5000), also ERC-20 on Ethereum (chain ID 1)</span></div>
-<div class="feat-fact"><span class="fl">How it works</span><span class="fv">Lock or deposit MNT into a campaign or DeFi strategy; that protocol's contracts record the position and accrue rewards under its own rules</span></div>
-<div class="feat-fact"><span class="fl">Rewards</span><span class="fv">Variable and protocol-set — campaign incentives, lending interest, or trading fees depending on route; current rate shown in the app</span></div>
-<div class="feat-fact"><span class="fl">Custody</span><span class="fv">You sign from your own wallet; after deposit, the destination contract holds MNT until its exit conditions are met</span></div>
-<div class="feat-fact"><span class="fl">Lock-up / exit</span><span class="fv">Route-specific — locking periods, cooldowns, and withdrawal queues differ per campaign or protocol; check before depositing</span></div>
-<div class="feat-fact"><span class="fl">Verify</span><span class="fv">Confirm the network, the token contract, the reward source, and the exit rules before signing any approval</span></div>
+<div class="c559958">
+  <div class="cb79792" aria-label="Guide highlights">
+    <div class="cc6374e"><strong>Key facts</strong><span>The essentials at a glance</span></div>
+    <div class="cc6374e"><strong>In depth</strong><span>Explore the details</span></div>
+    <div class="cc6374e"><strong>Questions answered</strong><span>Find a little more clarity</span></div>
+    <div class="cc6374e"><strong>Sources</strong><span>Follow the references</span></div>
+  </div>
+  <div class="c289794">
+    <nav class="c7210ea" aria-labelledby="toc-title">
+      <h2 class="c8514da" id="toc-title">On this page</h2>
+      <ul class="ce37374" id="toc-list">
+        <li><a class="cfec68f" href="#key-facts">Key facts</a></li>
+        <li><a class="cfec68f" href="#guide-sections" data-sections-link>In depth</a></li>
+        <li><a class="cfec68f" href="#questions">Questions &amp; answers</a></li>
+        <li><a class="cfec68f" href="#sources">Sources</a></li>
+      </ul>
+      <p class="c0f315d">Read from the beginning, or jump to the details you need.</p>
+    </nav>
+    <main class="cf4308f" id="guide-main" tabindex="-1">
+      <section class="cd675d9" id="key-facts" aria-labelledby="facts-title">
+        <div class="cd04086"><h2 id="facts-title">Key facts</h2><p>At a glance</p></div>
+        <div class="c6ecc2b"><table class="c9e0ac0"><tbody><tr><th scope="row">Token</th><td>MNT — Mantle's native gas and governance token</td></tr>
+<tr><th scope="row">Mechanism</th><td>Delegated proof-of-stake to Mantle validators</td></tr>
+<tr><th scope="row">Liquid option</th><td>Receipt tokens, in the mold of mETH, stay usable in DeFi</td></tr>
+<tr><th scope="row">Lock-up</th><td>Unbonding window before unstaked MNT becomes claimable</td></tr>
+<tr><th scope="row">Rewards source</th><td>Network issuance plus a share of transaction fees</td></tr>
+<tr><th scope="row">Custody</th><td>Self-custody — your wallet, your keys</td></tr></tbody></table></div>
+      </section>
+      <div class="cc3cfa8" id="guide-sections"><section class="cdd745c"><h2 class="c9b1816">What Is MNT Staking</h2><div class="c827d9b"><strong>MNT Staking is the process of committing MNT tokens to a Mantle validator so the network can use that stake to help secure consensus and agree on the state of the chain, in exchange for a share of the rewards the network generates.</strong> Because Mantle's gas and governance token is MNT, staking it ties your holdings directly to the health of the network you are already using: validators that behave correctly earn rewards, and the stake backing them signals they have something to lose if they do not. For most holders, MNT Staking is a way to put an idle balance to work instead of leaving it sitting unproductive in a wallet, while still being able to unstake once a lock-up period elapses.</div></section>
+<section class="cdd745c"><h2 class="c9b1816">How MNT Staking Works</h2><div class="c827d9b">MNT Staking follows a familiar delegated proof-of-stake pattern: you choose a validator, delegate or deposit your MNT, and the protocol begins counting your stake toward that validator's weight in the network almost immediately. Rewards accrue continuously and are distributed on a schedule set by the staking module, usually compounding automatically if you leave them in place rather than claiming them every cycle.<h3>Choosing a Validator</h3>Validators differ in commission rate, uptime history and the size of stake they already hold, all of which affect your net yield. A validator with a high commission takes a larger cut of every reward, while one with poor uptime can miss rounds and reduce what gets distributed to everyone delegating to it. Spreading MNT Staking across more than one validator reduces the impact if any single operator underperforms or goes offline.<h3>Delegation vs Running a Validator</h3>Most holders delegate rather than run their own validator, since operating one requires dedicated hardware, continuous uptime and enough self-stake to be competitive. Delegating keeps custody of your MNT in your own wallet while the validator does the operational work, and you can usually redelegate to a different validator without fully unstaking first.<h3>Where the Rewards Come From</h3>Rewards for MNT Staking come from a mix of network issuance and a portion of the transaction fees collected on Mantle, similar to how other proof-of-stake networks fund their validator set. The exact split can shift through governance, which is one more reason stakers often also follow proposals that touch the reward curve.</div></section>
+<section class="cdd745c"><h2 class="c9b1816">mETH and Mantle's Liquid Staking Products</h2><div class="c827d9b">Native MNT Staking locks your tokens for the delegation period, but Mantle's wider ecosystem also supports liquid staking, where a protocol issues a receipt token representing your staked position so you can keep using it elsewhere. mETH is the most visible example on the Ethereum side of Mantle's ecosystem, and it shows how the same liquid-staking idea is being extended to MNT itself through newer products built on top of Mantle.<h3>How a Liquid-Staking Token Works</h3>When you deposit MNT into a liquid-staking product, you receive a token back whose value tracks your underlying stake plus accrued rewards. That receipt token can be held, traded or supplied to a lending market while the original MNT keeps earning in the background, which is the main advantage over plain MNT Staking: your capital is not fully locked away.<h3>Weighing Liquid Staking Against Native Staking</h3>Liquid staking adds a layer of smart-contract and protocol risk on top of ordinary validator risk, since you are trusting the issuing protocol's code and its peg mechanism, not just the validator set. Native MNT Staking has fewer moving parts but locks your tokens more rigidly; checking a project's audits and the depth of its market on <a href="https://defillama.com/chain/Mantle" rel="nofollow noopener" target="_blank">DefiLlama</a> is a reasonable way to gauge how established a given liquid-staking option already is.</div></section>
+<section class="cdd745c"><h2 class="c9b1816">MNT Staking Rewards and Yield</h2><div class="c827d9b">Yield from MNT Staking is usually quoted as an annualized rate, but the number you actually receive depends on the validator's commission, how consistently it stays online, and whether rewards compound automatically or need to be claimed by hand. The table below lines up the main ways to put MNT to work so you can compare them side by side before choosing one.<table><thead><tr><th>Approach</th><th>How it earns</th><th>Liquidity while staked</th></tr></thead><tbody><tr><td>Native MNT Staking</td><td>Delegate to a validator, earn a share of issuance and fees</td><td>Locked until the unstaking period ends</td></tr><tr><td>Liquid staking (receipt token)</td><td>Deposit MNT, receive a token that tracks your stake</td><td>Receipt token can be traded or used in DeFi</td></tr><tr><td>Staking via an exchange</td><td>The exchange pools your MNT with a validator on your behalf</td><td>Usually flexible, but custody sits with the exchange</td></tr></tbody></table></div></section>
+<section class="cdd745c"><h2 class="c9b1816">Lock-Up, Withdrawal and Unstaking</h2><div class="c827d9b">Unstaking MNT is not instant. Ending a MNT Staking position means first signaling to the validator that you want out, then waiting for the network's unbonding window before the tokens unlock and show up as a spendable balance again in your wallet.<ul><li>Open your staking position and select the amount of MNT you want to unstake.</li><li>Confirm the unstaking transaction and pay the small gas fee in MNT.</li><li>Wait out the unbonding period, during which some designs keep paying rewards while others pause them.</li><li>Watch the position in your wallet or on the <a href="https://explorer.mantle.xyz/" rel="nofollow noopener" target="_blank">Mantle explorer</a> until it changes from locked to claimable.</li><li>Claim the unlocked MNT with a final transaction, after which it is a normal, transferable balance again.</li></ul></div></section>
+<section class="cdd745c"><h2 class="c9b1816">Risks of MNT Staking</h2><div class="c827d9b">Like any proof-of-stake system, MNT Staking carries risks beyond simple price movement in MNT itself, and understanding them before you delegate is worth the few extra minutes it takes.<h3>Validator and Slashing Risk</h3>If a validator double-signs or goes offline for an extended stretch, the protocol can reduce the stake backing it, and anyone delegating to that validator absorbs a share of the loss. Reviewing a validator's track record before committing MNT Staking funds to it is the simplest way to limit this exposure, and comparing uptime data across operators costs nothing.<h3>Smart-Contract and Liquidity Risk</h3>Liquid-staking receipt tokens depend on the issuing contract behaving as written and on a market deep enough to trade the token near its underlying value; a thin market can make the receipt token trade below the MNT it represents during stress. Checking a protocol's audit history and tracking its total value locked on <a href="https://defillama.com/chain/Mantle" rel="nofollow noopener" target="_blank">DefiLlama</a> gives a rough sense of how tested a given option already is.</div></section>
+<section class="cdd745c"><h2 class="c9b1816">Governance and the Bigger Picture of MNT Staking</h2><div class="c827d9b">MNT is also Mantle's governance token, so MNT Staking often sits next to voting power rather than apart from it: some designs let staked MNT retain or even gain voting weight, tying network security and network governance together. Reading the <a href="https://docs.mantle.xyz/" rel="nofollow noopener" target="_blank">Mantle docs</a> before voting on a proposal that touches staking parameters, such as the reward curve or the unbonding window, is worth doing since those changes affect every staker at once. For a broader sense of how staking design compares across chains, the overview of <a href="https://ethereum.org/en/staking/" rel="nofollow noopener" target="_blank">staking on Ethereum</a> is a useful reference point, and tracking Mantle's own rollup security on <a href="https://l2beat.com/scaling/projects/mantle" rel="nofollow noopener" target="_blank">L2BEAT</a> rounds out the picture of what your staked MNT is ultimately helping to secure. Self-custody remains the constant through all of this: your keys control your stake at every step, and no legitimate staking product or validator will ever ask for your seed phrase.</div></section></div>
+      <section class="c59b525" id="questions" aria-labelledby="questions-title">
+        <h2 class="c9b1816" id="questions-title">Questions &amp; answers</h2>
+        <details class="c727cd0"><summary class="c275b10">What is MNT Staking?</summary><div class="ceb237d">MNT Staking is delegating or depositing MNT, Mantle's native gas and governance token, to a validator so the network can use that stake to help secure consensus, in exchange for a share of the rewards it generates.</div></details>
+<details class="c727cd0"><summary class="c275b10">How does MNT Staking work?</summary><div class="ceb237d">You choose a validator, delegate your MNT to it, and the protocol starts counting your stake toward that validator's weight almost immediately. Rewards accrue on a schedule and typically compound unless you claim them.</div></details>
+<details class="c727cd0"><summary class="c275b10">What is mETH and how does it relate to MNT Staking?</summary><div class="ceb237d">mETH is Mantle's liquid-staking token on the Ethereum side of its ecosystem, and it illustrates the same liquid-staking pattern now extending to MNT itself: a receipt token that tracks your stake while staying usable elsewhere.</div></details>
+<details class="c727cd0"><summary class="c275b10">Is MNT Staking locked up?</summary><div class="ceb237d">Yes. Ending a native MNT Staking position requires an unbonding period before the tokens unlock and become a normal, transferable balance again; liquid-staking receipt tokens avoid this by trading freely while the underlying stake keeps earning.</div></details>
+<details class="c727cd0"><summary class="c275b10">What are the main risks of MNT Staking?</summary><div class="ceb237d">Validator slashing or extended downtime can reduce the stake backing a validator, and liquid-staking products add smart-contract and market-depth risk on top of that. Reviewing validator track records and protocol audits limits both.</div></details>
+<details class="c727cd0"><summary class="c275b10">Does MNT Staking affect governance?</summary><div class="ceb237d">Yes. MNT is Mantle's governance token, and some designs let staked MNT retain or gain voting weight, so a decision to stake can carry voting consequences alongside the yield.</div></details>
+<details class="c727cd0"><summary class="c275b10">Do I need to give up custody for MNT Staking?</summary><div class="ceb237d">No. Delegating keeps your MNT in your own wallet while the validator does the operational work, and no legitimate validator or staking product will ever ask for your seed phrase.</div></details>
+      </section>
+    </main>
+  </div>
 </div>
-</div>
-</details>
-</div>
-<div class="feat-r"><span class="feat-badge"><img alt="MNT Staking" height="72" src="mnt.png" width="72"/></span></div>
-</div>
-</div>
-<div class="docs">
-<nav aria-label="On this page" class="toc">
-<p class="toc-h">On this page</p>
-<a href="#what">What is Mnt Staking?</a>
-<a href="#how">How it works</a>
-<a href="#ways">Your options</a>
-<a href="#rewards">Rewards and APY</a>
-<a href="#risks">Risks and lock-up</a>
-<a href="#howto">How to start</a>
-<a href="#withdraw">Unstaking and withdrawals</a>
-<a href="#faq">MNT FAQ</a>
-<a href="#notes">Notes before you stake</a>
-</nav>
-<div class="doc-main">
-<details class="sec reveal doc-sec" id="what" open="">
-<summary><h2>What is Mnt Staking?</h2></summary>
-<div class="sec-body">MNT staking means committing Mantle's governance and utility token to an official reward campaign or a third-party DeFi position that pays under its own rules. MNT is used on <a href="https://www.mantle.xyz/" rel="noopener noreferrer" target="_blank">Mantle Network</a>, an EVM network with chain ID 5000, where it pays transaction fees; it also exists as an ERC-20 on Ethereum Mainnet (chain ID 1) at contract <a href="https://etherscan.io/token/0x3c3a81e81dc49A522A592e7622A7E711c06bf354" rel="noopener noreferrer" target="_blank">0x3c3a81e81dc49A522A592e7622A7E711c06bf354 on Etherscan</a>. The available positions are an official reward campaign run through Mantle's Rewards Station, or third-party DeFi such as lending, a vault, or a liquidity pool. Retail MNT locking does not make you an Ethereum validator — there is no validator staking route for MNT; <a href="https://ethereum.org/staking/" rel="noopener noreferrer" target="_blank">Ethereum staking explained</a> refers to a different proof-of-stake role. MNT staking is also different from mETH liquid staking, which stakes ETH and issues a transferable receipt token.</div>
-</details>
-<details class="sec reveal doc-sec" id="how" open="">
-<summary><h2>How it works</h2></summary>
-<div class="sec-body">MNT staking uses two wallet signatures after you choose a route: a token approval that lets the contract move your MNT, followed by a separate deposit or lock transaction. You connect a self-custody EVM wallet, choose the campaign, lending market, vault, or pool, and sign those transactions in that order. The protocol's smart contracts then record or custody the position and calculate rewards under their published rules; a <a href="https://csrc.nist.gov/glossary/term/Smart_contract" rel="noopener noreferrer" target="_blank">NIST smart-contract definition</a> describes this kind of code and data as deployed on-chain and executed by network nodes. Reward sources differ by route: official Mantle programs use campaign incentive budgets and went live as a lock-and-allocate system, as reported in the <a href="https://www.coindesk.com/markets/2024/03/27/layer-2-blockchain-mantles-token-hits-all-time-high-as-reward-system-goes-live" rel="noopener noreferrer" target="_blank">reward system launch report</a>; third-party DeFi uses lending interest, trading fees, or vault strategy yield. Because you are not validating anything, MNT locking has no slashing in the proof-of-stake sense.</div>
-</details>
-<details class="sec reveal doc-sec" id="ways" open="">
-<summary><h2>Your options</h2></summary>
-<div class="sec-body">MNT has three practical positions: official reward campaigns, third-party DeFi, and holding the token in self-custody. In an official campaign, you lock MNT in Mantle's Rewards Station and allocate it to eligible campaigns; each campaign discloses its reward source, schedule, and lock terms, while the position stays inside Mantle's own contracts. In third-party DeFi on Mantle or Ethereum, you can lend MNT, deposit it into a vault, or provide liquidity in an MNT pair; these positions are separate from official campaigns and are often liquid or flexible to exit. The route set can be surveyed in <a href="https://defillama.com/chain/mantle" rel="noopener noreferrer" target="_blank">Mantle ecosystem data</a>. Holding MNT in self-custody is not a reward position, but it is the baseline with no destination-contract exposure for comparing whether a route's reward justifies its lock-up and terms.</div>
-</details>
-<details class="sec reveal doc-sec" id="rewards" open="">
-<summary><h2>Rewards and APY</h2></summary>
-<div class="sec-body">MNT staking has no single yield number because rewards are set per protocol and per campaign. Campaign budgets deplete, lending rates follow utilisation, and pool fees follow volume. Official campaigns pay from a disclosed incentive schedule against locked and allocated MNT; lending pays interest from borrowers; liquidity pools pay a share of trading fees; and vaults pay whatever the strategy produces after its fees. In a pool, the result also includes <a href="https://www.binance.com/en/academy/articles/impermanent-loss-explained" rel="noopener noreferrer" target="_blank">impermanent loss</a> when the deposited token ratio changes relative to when you entered. The current rate is the figure shown in the route's own interface at the moment you deposit, so compare that figure with the route's fees before calculating what reaches you.</div>
-</details>
-<details class="sec reveal doc-sec" id="risks" open="">
-<summary><h2>Risks and lock-up</h2></summary>
-<div class="sec-body">MNT staking's main risks are lock-up and exit risk, smart-contract risk, oracle risk, approval risk, protocol-governance risk, counterparty risk, and liquidity and price risk. Campaign locks and protocol cooldowns can make MNT unavailable when you want it, especially while the market is moving. A bug or exploit in the destination contract, a faulty oracle, or a third-party counterparty failure can damage the position; a broad or malicious approval can expose your whole wallet balance, not just the stake. Terms, reward schedules, and withdrawal rules can change under the route's governance. MNT's market price moves independently of earned rewards, and a thin exit market can make a paper gain hard to realise. Retail locking carries no validator slashing penalty because it is not validator staking. Keep a lock-up or contract failure survivable, and do not stake funds needed on a deadline.</div>
-</details>
-<details class="sec reveal doc-sec" id="howto" open="">
-<summary><h2>How to start</h2></summary>
-<div class="sec-body">To start MNT staking, choose either an official campaign through Rewards Station or a third-party DeFi position before connecting a wallet. Use a self-custody EVM wallet; for anything beyond a test amount, a hardware wallet is the baseline, with your seed phrase stored offline and never typed anywhere. Fund it with MNT on the right network — Mantle Mainnet (chain ID 5000) for Mantle-native routes, Ethereum Mainnet for ERC-20 routes — plus gas: MNT pays gas on Mantle, ETH on Ethereum. The Ethereum MNT contract is 0x3c3a81e81dc49A522A592e7622A7E711c06bf354. In the route's own interface, confirm the current reward source, lock terms, and fees; then sign the approval and deposit as two separate steps. Start with a small deposit, confirm that the position and reward accrual appear, then scale.</div>
-</details>
-<details class="sec reveal doc-sec" id="withdraw" open="">
-<summary><h2>Unstaking and withdrawals</h2></summary>
-<div class="sec-body">You unstake MNT through the same protocol you deposited into, under its exit conditions; there is no universal withdrawal. A campaign may let you claim accrued rewards when it allows, but locked principal is released only when the lock period ends, and early exit is usually not available. Lending and vault positions are often withdrawable at-will subject to available liquidity, a cooldown, or a queue; if utilisation is high, the withdrawal waits. In a liquidity pool, you remove liquidity and swap back through the pool, which applies the pool's price impact and fees. The withdrawal transaction can confirm on-chain in seconds, while reward claims, cooldowns, and unlock schedules run on the protocol's clock. The exit details to record are the lock end date, queue mechanics, and network gas needed for withdrawal.</div>
-</details>
-<details class="sec reveal doc-sec" id="faq" open="">
-<summary><h2>MNT FAQ</h2></summary>
-<div class="sec-body">
-<details class="qa"><summary>Is MNT staking safe?</summary><div class="a"><p>MNT staking has no single safety profile because official campaigns, lending, vaults, and liquidity pools use different contracts, terms, and exit mechanics.</p></div></details>
-<details class="qa"><summary>How are MNT staking rewards and APY determined?</summary><div class="a"><p>MNT staking rewards and APY are route-specific: official campaigns use incentive schedules, lending uses borrower interest, liquidity pools use trading fees, and vaults use strategy output after fees. The current rate is shown in the selected route's own interface.</p></div></details>
-<details class="qa"><summary>How much MNT do I need to start staking?</summary><div class="a"><p>Retail routes through a self-custody wallet generally have low practical entry points, and there is no validator-style minimum because MNT locking is not validator staking. A specific campaign or protocol can set its own minimum, and you need extra MNT or ETH for gas on the relevant network.</p></div></details>
-<details class="qa"><summary>How do I unstake MNT, and how long does it take?</summary><div class="a"><p>You exit through the same protocol you deposited into: campaign principal typically releases at the end of the lock period, while lending, vault, and pool positions can involve available-liquidity limits, cooldowns, or queues. The withdrawal transaction can confirm on-chain quickly, but the protocol's exit schedule determines when funds are usable.</p></div></details>
-<details class="qa"><summary>What are the main ways to stake MNT?</summary><div class="a"><p>Two active reward routes exist: lock MNT in official reward campaigns through Mantle's Rewards Station, or deposit it into third-party DeFi — lending, vaults, or liquidity pools — on Mantle or Ethereum. mETH liquid staking is a separate product that stakes ETH, not MNT.</p></div></details>
-<details class="qa"><summary>Is this the official Mantle staking site?</summary><div class="a"><p>No. This is an independent, non-custodial reference dashboard; it does not request private keys, take custody of assets, or operate any staking contracts. Official campaign terms are published through Mantle's Rewards Station.</p></div></details>
-</div>
-</details>
-<section class="field-notes reveal doc-sec" id="notes">
-<h2>Notes before you stake</h2>
-<div class="fn-body">Pick the route that matches the control and lock-up you genuinely accept: an official campaign lock and a flexible lending position are different commitments, and the right one depends on when you might need the MNT back, not on which headline looks bigger. <strong>The common mistake is</strong> comparing an advertised yield without accounting for the lock period, exit mechanics, and who controls the tokens after deposit. <strong>Before you commit:</strong> confirm who controls the funds, read the route's lock end, cooldowns, queues, and withdrawal or performance fees, verify the token and destination contract, and use a hardware wallet for anything beyond a test amount. The mechanism, networks, and routes described here were cross-checked against current Mantle documentation and public campaign materials; last reviewed 21 July 2026.</div>
+<section class="c27a738" id="sources" aria-labelledby="sources-title">
+  <div class="c559958 c0cf136">
+    <div class="c123fd3"><h2 id="sources-title">Sources</h2><p>References for further reading.</p></div>
+    <div class="c274331"><ul class="c1d512d"><li><a class="c60e88a" href="https://docs.mantle.xyz/" rel="nofollow noopener" target="_blank">Mantle documentation</a></li>
+<li><a class="c60e88a" href="https://explorer.mantle.xyz/" rel="nofollow noopener" target="_blank">Mantle network explorer</a></li>
+<li><a class="c60e88a" href="https://l2beat.com/scaling/projects/mantle" rel="nofollow noopener" target="_blank">Mantle on L2BEAT</a></li>
+<li><a class="c60e88a" href="https://defillama.com/chain/Mantle" rel="nofollow noopener" target="_blank">Mantle on DefiLlama</a></li></ul></div>
+  </div>
 </section>
-</div>
-</div>
-</div>
-<footer class="site-foot"><div class="wrap">Mnt Staking Guide &amp; Technical Reference · <a href="dashboard/" rel="noopener noreferrer" target="_blank">Open Mnt Staking App ↗</a> · © 2026</div></footer>
-</main>
-</div>
+<footer class="cca1c12">
+  <div class="c559958 cbf7996">
+    <span class="ccb94a3">The guide</span>
+    <p class="c0dfb73">Last updated <span>Updated Oct 10, 2026</span></p>
+  </div>
+</footer>
 <script>
-/* MNT Staking: premium hero, mobile nav, scroll-reveal. */
-(function () {
-  "use strict";
-  document.documentElement.classList.add("js");
-  var $ = function (id) { return document.getElementById(id); };
-  function money(n) {
-    if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
-    if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
-    if (n >= 1e3) return "$" + (n / 1e3).toFixed(0) + "K";
-    return "$" + n.toFixed(0);
-  }
-  function grab(url) {
-    var controller = "AbortController" in window ? new AbortController() : null;
-    var timer = controller ? setTimeout(function () { controller.abort(); }, 6500) : null;
-    return fetch(url, controller ? { signal: controller.signal } : undefined)
-      .then(function (response) { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
-      .finally(function () { if (timer) clearTimeout(timer); });
-  }
-  var SIGNALS = [{"t": "price", "id": "sig-mantle", "cg": "mantle", "chg": true, "label": "MNT", "link": "https://www.coingecko.com/en/coins/mantle"}, {"t": "mcap", "id": "sig-mc-mantle", "cg": "mantle", "label": "Market cap", "link": "https://www.coingecko.com/en/coins/mantle"}, {"t": "price", "id": "sig-ethereum", "cg": "ethereum", "label": "ETH", "link": "https://www.coingecko.com/en/coins/ethereum"}];
-  (function(){
-    var S = SIGNALS; if(!S||!S.length) return;
-    function el(id){return document.getElementById(id);}
-    function hide(id){var e=el(id);if(e){var t=e.closest(".tick");if(t)t.style.display="none";}}
-    function set(id,x){var e=el(id);if(e)e.textContent=x;}
-    function usd(n){n=Number(n);return "$"+n.toLocaleString("en-US",{maximumFractionDigits:n<1?4:0});}
-    function big(n){n=Number(n);if(n>=1e9)return "$"+(n/1e9).toFixed(2)+"B";if(n>=1e6)return "$"+(n/1e6).toFixed(1)+"M";if(n>=1e3)return "$"+(n/1e3).toFixed(1)+"K";return "$"+Math.round(n);}
-    function jf(u){return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();});}
-    var coins = S.filter(function(s){return s.t==="price"||s.t==="mcap";});
-    if(coins.length){
-      var ids=coins.map(function(s){return s.cg;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join(",");
-      jf("https://api.coingecko.com/api/v3/simple/price?ids="+ids+"&vs_currencies=usd&include_24hr_change=true&include_market_cap=true")
-        .then(function(v){coins.forEach(function(s){var d=v[s.cg];if(!d){hide(s.id);return;}
-          if(s.t==="mcap"){isFinite(d.usd_market_cap)&&d.usd_market_cap>0?set(s.id,big(d.usd_market_cap)):hide(s.id);return;}
-          if(isFinite(d.usd)){var x=usd(d.usd);if(s.chg&&isFinite(d.usd_24h_change)){var c=d.usd_24h_change;x+=" "+(c>=0?"▲":"▼")+Math.abs(c).toFixed(1)+"%";}set(s.id,x);}else hide(s.id);});})
-        .catch(function(){coins.forEach(function(s){hide(s.id);});});
+(() => {
+  const toc = document.getElementById('toc-list');
+  const sections = Array.from(document.querySelectorAll('#guide-sections .cdd745c'));
+  const fallback = toc.querySelector('[data-sections-link]');
+  const fragment = document.createDocumentFragment();
+  sections.forEach((section, index) => {
+    if (!section.id) {
+      const base = `guide-section-${index + 1}`;
+      let id = base;
+      let suffix = 1;
+      while (document.getElementById(id)) id = `${base}-${suffix++}`;
+      section.id = id;
     }
-    S.forEach(function(s){
-      if(s.t==="tvl") jf("https://api.llama.fi/tvl/"+s.sl).then(function(v){var n=Number(v);isFinite(n)&&n>0?set(s.id,big(n)):hide(s.id);}).catch(function(){hide(s.id);});
-      else if(s.t==="vol") jf("https://api.llama.fi/summary/dexs/"+s.sl+"?excludeTotalDataChart=true&excludeTotalDataChartBreakdown=true").then(function(v){var n=v&&Number(v.total24h);isFinite(n)&&n>0?set(s.id,big(n)):hide(s.id);}).catch(function(){hide(s.id);});
-      else if(s.t==="ctvl") jf("https://api.llama.fi/v2/chains").then(function(a){var f=(a||[]).filter(function(c){return c.name===s.ch;})[0];f&&isFinite(f.tvl)&&f.tvl>0?set(s.id,big(f.tvl)):hide(s.id);}).catch(function(){hide(s.id);});
+    const heading = section.querySelector('.c9b1816, h2, h3');
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.className = 'toc-link';
+    link.href = `#${encodeURIComponent(section.id)}`;
+    link.textContent = heading?.textContent.trim() || section.getAttribute('aria-label') || `Section ${index + 1}`;
+    item.append(link);
+    fragment.append(item);
+  });
+  if (sections.length) fallback.parentElement.replaceWith(fragment);
+  const entries = Array.from(toc.querySelectorAll('a[href^="#"]')).map(link => {
+    const target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+    return { link, target };
+  }).filter(entry => entry.target);
+  if (!entries.length) return;
+  let activeLink;
+  let pending = false;
+  const activate = entry => {
+    if (!entry || entry.link === activeLink) return;
+    if (activeLink) activeLink.removeAttribute('aria-current');
+    entry.link.setAttribute('aria-current', 'location');
+    activeLink = entry.link;
+  };
+  const update = () => {
+    pending = false;
+    const boundary = Math.min(180, window.innerHeight * .25);
+    let active = entries[0];
+    for (const entry of entries) {
+      if (entry.target.getBoundingClientRect().top <= boundary) active = entry;
+    }
+    const root = document.scrollingElement || document.documentElement;
+    if (root.scrollHeight > window.innerHeight && Math.ceil(window.scrollY + window.innerHeight) >= root.scrollHeight - 2) {
+      active = entries[entries.length - 1];
+    }
+    activate(active);
+  };
+  const schedule = () => {
+    if (pending) return;
+    pending = true;
+    window.requestAnimationFrame(update);
+  };
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(schedule, {
+      rootMargin: '-12% 0px -60% 0px',
+      threshold: [0, .1, .5, 1]
     });
-  })();
-/* no live metrics on stake */
-
-  var swap = $("route-swap");
-  if (swap) swap.addEventListener("click", function () {
-    var from = $("asset-from"), to = $("asset-to"), hold = from.innerHTML;
-    from.innerHTML = to.innerHTML;
-    to.innerHTML = hold;
-  });
-
-  /* AMM / TWAMM route switch (preview label only). */
-  var modeToggle = $("mode-toggle");
-  if (modeToggle) modeToggle.addEventListener("click", function () {
-    var twamm = modeToggle.getAttribute("aria-checked") !== "true";
-    modeToggle.setAttribute("aria-checked", String(twamm));
-    var amm = $("ms-amm"), tw = $("ms-twamm"), name = $("route-name");
-    if (amm) amm.classList.toggle("is-on", !twamm);
-    if (tw) tw.classList.toggle("is-on", twamm);
-    /* no mode toggle */
-  });
-
-  /* Collapsed left menu: off-canvas drawer opened from the topbar, closed by scrim / Esc / link / close button. */
-  var shell = document.querySelector(".shell");
-  var sidebar = document.querySelector(".sidebar");
-  var sideNav = $("sideNav");
-  var scrim = document.querySelector("[data-scrim]");
-  var openBtn = document.querySelector("[data-nav-open]");
-  var closeBtn = document.querySelector(".nav-toggle");
-  function setNav(open) {
-    if (sidebar) sidebar.classList.toggle("is-open", open);
-    if (scrim) scrim.classList.toggle("is-open", open);
-    if (shell) shell.classList.toggle("nav-open", open);
-    if (openBtn) openBtn.setAttribute("aria-expanded", String(open));
-    if (closeBtn) closeBtn.setAttribute("aria-expanded", String(open));
+    entries.forEach(entry => observer.observe(entry.target));
   }
-  if (openBtn) openBtn.addEventListener("click", function () { setNav(!(sidebar && sidebar.classList.contains("is-open"))); });
-  if (closeBtn) closeBtn.addEventListener("click", function () { setNav(false); });
-  if (scrim) scrim.addEventListener("click", function () { setNav(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
-  if (sideNav) sideNav.addEventListener("click", function (e) { if (e.target.closest("a")) setNav(false); });
-
-  /* Scroll-reveal: content is always in the HTML; this only animates it into view. */
-  var reveals = document.querySelectorAll(".reveal");
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reveals.length && "IntersectionObserver" in window && !reduce) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    reveals.forEach(function (el) { io.observe(el); });
-  } else {
-    reveals.forEach(function (el) { el.classList.add("in"); });
-  }
-
-  /* Open (and reveal) the targeted section accordion when its fragment is used. */
-  function openHashTarget() {
-    var id = location.hash.slice(1);
-    if (!id) return;
-    var el = document.getElementById(id);
-    if (el && el.tagName === "DETAILS") { el.open = true; el.classList.add("in"); }
-  }
-  window.addEventListener("hashchange", openHashTarget);
-  openHashTarget();
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest('a[href^="#"]');
-    if (!a) return;
-    var el = document.getElementById(a.getAttribute("href").slice(1));
-    if (el && el.tagName === "DETAILS") { el.open = true; el.classList.add("in"); }
+  toc.addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const entry = entries.find(item => item.link === link);
+    if (!entry) return;
+    event.preventDefault();
+    const hadTabindex = entry.target.hasAttribute('tabindex');
+    if (!hadTabindex) {
+      entry.target.setAttribute('tabindex', '-1');
+      entry.target.addEventListener('blur', () => entry.target.removeAttribute('tabindex'), { once: true });
+    }
+    entry.target.focus({ preventScroll: true });
+    entry.target.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start'
+    });
+    if (window.location.hash !== link.hash) {
+      try { window.history.pushState(null, '', link.hash); } catch {}
+    }
+    activate(entry);
   });
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  window.addEventListener('hashchange', schedule);
+  window.addEventListener('load', schedule, { once: true });
+  update();
 })();
-  (function(){
-    var links=[].slice.call(document.querySelectorAll(".toc a"));
-    if(!links.length)return;
-    var secs=[].slice.call(document.querySelectorAll(".doc-main [id]")).filter(function(s){return document.querySelector('.toc a[href="#'+s.id+'"]');});
-    if(!secs.length)return;
-    function setActive(id){links.forEach(function(a){a.classList.toggle("active",a.getAttribute("href")==="#"+id);});}
-    function update(){var cur=secs[0];for(var i=0;i<secs.length;i++){if(secs[i].getBoundingClientRect().top-120<=0)cur=secs[i];else break;}if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)cur=secs[secs.length-1];if(cur)setActive(cur.id);}
-    window.addEventListener("scroll",update,{passive:true});
-    window.addEventListener("resize",update);
-    update();
-  })();
-  </script>
+</script>
 </body>
 </html>
