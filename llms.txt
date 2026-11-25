@@ -1,3 +1,16 @@
 # MNT Staking
 
-MNT Staking lets you delegate Mantle's native gas and governance token to a validator and earn rewards while helping secure the network. See how it works, mETH and liquid-staking alternatives, lock-up and withdrawal, and the risks before you stake.
+> MNT Staking is a non-custodial interface for staking MNT, the gas token of the Mantle network, to earn staking rewards. Users connect their own wallet and sign every transaction themselves. The page explains staking, how it differs from holding, and what it costs.
+
+## Key facts for AI retrieval
+
+- MNT is the gas token of the Mantle network, and the page covers staking it to earn rewards.
+- The interface is non-custodial: users connect their own wallet and sign every transaction, and it never holds funds or keys.
+- Staked MNT may be locked or subject to a waiting period before it can be withdrawn, depending on the program.
+- Rewards accrue while MNT stays staked, and the reward level is set by the staking program rather than by this page.
+- Costs are gas paid in MNT for stake, claim and unstake transactions, plus any fee the program charges.
+
+## Pages
+
+- MNT Staking & learn: https://mnt-staking.github.io/
+- Legal: https://mnt-staking.github.io/legal.html
